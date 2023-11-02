@@ -2,6 +2,12 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { AuthModule } from './auth/auth.module';
+import { UsersModule } from './users/users.module';
+import { SalesModule } from './sales/sales.module';
+import { SegmentsModule } from './segments/segments.module';
+import { BrandsModule } from './brands/brands.module';
+import { BenefitsModule } from './benefits/benefits.module';
 
 @Module({
   imports: [
@@ -17,6 +23,12 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       retryDelay: 3000,
       retryAttempts: 10,
     }),
+    AuthModule,
+    UsersModule,
+    SalesModule,
+    SegmentsModule,
+    BrandsModule,
+    BenefitsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
