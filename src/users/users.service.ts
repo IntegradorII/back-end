@@ -14,8 +14,15 @@ export class UsersService {
   ) { }
 
   create(createUserDto: CreateUserDto) {
-    const user = this.userRepository.create(createUserDto);
-    return this.userRepository.save(user);
+    // const user = this.userRepository.findOneBy({ doc_type: createUserDto.doc_type, doc_number: createUserDto.doc_number });
+    // if (user) {
+    //   return {
+    //     message: 'User already exists'
+    //   }
+    // }
+    const newUser = this.userRepository.create(createUserDto);
+    return this.userRepository.save(newUser);
+    // return this.userRepository.save(createUserDto);
   }
 
   findOneByEmail(email: string) {
@@ -26,14 +33,12 @@ export class UsersService {
     return 'This action returns all users';
   }
 
-  // findOne(idType: string, idNumber: string) {
-  //   return this.userRepository.findOneBy({ idType, idNumber });
-  // }
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
+  findOneByDocTypeAndDocNumber(doc_type: string, doc_number: string) {
+    return this.userRepository.findOneBy({ doc_type, doc_number });
   }
 
   update(id: number, updateUserDto: UpdateUserDto) {
+    console.log('updateUserDto', updateUserDto);
     return `This action updates a #${id} user`;
   }
 

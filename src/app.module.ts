@@ -8,6 +8,7 @@ import { SalesModule } from './sales/sales.module';
 import { SegmentsModule } from './segments/segments.module';
 import { BrandsModule } from './brands/brands.module';
 import { BenefitsModule } from './benefits/benefits.module';
+import { CharacteristicsModule } from './characteristics/characteristics.module';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { BenefitsModule } from './benefits/benefits.module';
     SegmentsModule,
     BrandsModule,
     BenefitsModule,
+    CharacteristicsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

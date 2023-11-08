@@ -1,20 +1,20 @@
-import { Column, CreateDateColumn, DeleteDateColumn, Entity, UpdateDateColumn } from 'typeorm';
+import { Column, CreateDateColumn, DeleteDateColumn, Entity, PrimaryColumn, UpdateDateColumn } from 'typeorm';
 import { Role } from 'src/common/enum/role.enum';
 
 @Entity()
 export class User {
 
-  @Column({ primary: true })
-  id_type: string;
+  @PrimaryColumn()
+  doc_type: string;
 
-  @Column({ primary: true })
-  id_number: string;
+  @PrimaryColumn()
+  doc_number: string;
 
   @Column()
   name: string;
 
   @Column()
-  lastname: string;
+  last_name: string;
 
   @Column({ unique: true })
   email: string;

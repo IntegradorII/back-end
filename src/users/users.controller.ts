@@ -17,9 +17,9 @@ export class UsersController {
     return this.usersService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.usersService.findOne(+id);
+  @Get(':doc_type/:doc_number')
+  findOneByDocTypeAndDocNumber(@Param('doc_type') doc_type: string, @Param('doc_number') doc_number: string) {
+    return this.usersService.findOneByDocTypeAndDocNumber(doc_type, doc_number);
   }
 
   @Patch(':id')
