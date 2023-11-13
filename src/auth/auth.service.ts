@@ -4,6 +4,7 @@ import { UsersService } from 'src/users/users.service';
 import * as bcrypt from 'bcrypt';
 import { SigninDto } from './dto/signin.dto';
 import { JwtService } from '@nestjs/jwt';
+import { UserData } from './auth.controller';
 
 @Injectable()
 export class AuthService {
@@ -39,13 +40,18 @@ export class AuthService {
       throw new BadRequestException('Invalid credentials');
     }
 
-    const payload = { email: user.email, sub: user.doc_type + user.doc_number };
+    const payload = { email: user.email, role: user.role };
     const accessToken = this.jwtService.sign(payload);
 
     return {
       access_token: accessToken,
       email: user.email,
+      role: user.role,
     }
+  }
+
+  async profile(user: UserData) {
+    return await this.usersService.findOneByEmail(user.email);
   }
 
 }

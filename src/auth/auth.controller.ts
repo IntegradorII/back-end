@@ -1,8 +1,20 @@
-import { Body, Controller, Post, UseGuards, Request } from '@nestjs/common';
+import { Body, Controller, Post, Get, UseGuards, Req } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { SignupDto } from './dto/signup.dto';
 import { SigninDto } from './dto/signin.dto';
-import { AuthGuard } from './guards/guards.guard';
+import { SignupGuard } from './guards/signup.guard';
+import { Auth } from './decorators/auth.decorator';
+import { Role } from 'src/common/enum/role.enum';
+
+export interface UserData {
+  email?: string;
+  role?: string;
+}
+
+interface RequestWithUser extends Request {
+  user: UserData;
+}
+
 @Controller('auth')
 export class AuthController {
 
@@ -11,17 +23,24 @@ export class AuthController {
   ) { }
 
   @Post('signup')
-  @UseGuards(AuthGuard)
-  signup(@Request() req, @Body() signupDto: SignupDto) {
-    return this.authService.signup(signupDto);
+  @UseGuards(SignupGuard)
+  async signup(@Req() req: RequestWithUser, @Body() signupDto: SignupDto) {
+    const res = await this.authService.signup(signupDto);
+    return {
+      message: 'User created',
+      user: req.user,
+      data: res,
+    }
   }
-  // @Post('signup')
-  // signup(@Body() signupDto: SignupDto) {
-  //   return this.authService.signup(signupDto);
-  // }
 
   @Post('signin')
   signin(@Body() signinDto: SigninDto) {
     return this.authService.signin(signinDto);
+  }
+  
+  @Get('profile')
+  @Auth(Role.ADMIN)
+  profile(@Req() req: RequestWithUser) {
+    return this.authService.profile(req.user);
   }
 }
