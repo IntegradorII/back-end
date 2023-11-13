@@ -1,5 +1,5 @@
 import { Transform } from 'class-transformer';
-import { IsEmail, IsNumberString, IsOptional, IsString, Length, MinLength } from 'class-validator';
+import { IsEmail, IsEnum, IsInt, IsNotEmpty, IsNumberString, IsOptional, IsString, Length, MinLength } from 'class-validator';
 import { Role } from 'src/common/enum/role.enum';
 
 export class SignupDto {
@@ -13,6 +13,7 @@ export class SignupDto {
   doc_number: string;
 
   @IsOptional()
+  @IsEnum(Role)
   role?: Role;
 
   @IsEmail()
@@ -26,22 +27,24 @@ export class SignupDto {
   @IsOptional()
   @IsString()
   @Transform(({ value }) => value.trim())
-  @MinLength(1)
+  @IsNotEmpty()
   first_name?: string;
 
   @IsOptional()
   @IsString()
   @Transform(({ value }) => value.trim())
-  @MinLength(1)
-  last_name: string;
+  @IsNotEmpty()
+  last_name?: string;
 
   @IsOptional()
-  @IsNumberString()
-  points: number;
+  // @IsNumber({ maxDecimalPlaces: 0 })
+  @IsInt()
+  points?: number;
 
   @IsOptional()
   @IsString()
   @Transform(({ value }) => value.trim())
-  @MinLength(1)
-  image: string;
+  @IsNotEmpty()
+  image?: string;
+  
 }

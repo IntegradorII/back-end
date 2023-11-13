@@ -25,8 +25,9 @@ export class User {
   @Column({ nullable: true })
   last_name: string;
 
+  // @Column({ default: 0, type: 'decimal', precision: 10, scale: 2 })
   @Column({ default: 0 })
-  points: number;
+  points: number
 
   @Column({ nullable: true })
   image: string;
