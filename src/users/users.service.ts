@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -14,12 +14,6 @@ export class UsersService {
   ) { }
 
   create(createUserDto: CreateUserDto) {
-    // const user = this.userRepository.findOneBy({ doc_type: createUserDto.doc_type, doc_number: createUserDto.doc_number });
-    // if (user) {
-    //   return {
-    //     message: 'User already exists'
-    //   }
-    // }
     const newUser = this.userRepository.create(createUserDto);
     return this.userRepository.save(newUser);
     // return this.userRepository.save(createUserDto);
@@ -30,11 +24,15 @@ export class UsersService {
   }
 
   findAll() {
-    return 'This action returns all users';
+    return this.userRepository.find
   }
 
   findOneByDocTypeAndDocNumber(doc_type: string, doc_number: string) {
-    return this.userRepository.findOneBy({ doc_type, doc_number });
+    const user = this.userRepository.findOneBy({ doc_type, doc_number });
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+    return user;
   }
 
   update(id: number, updateUserDto: UpdateUserDto) {

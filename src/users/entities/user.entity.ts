@@ -10,11 +10,8 @@ export class User {
   @PrimaryColumn()
   doc_number: string;
 
-  @Column()
-  name: string;
-
-  @Column()
-  last_name: string;
+  @PrimaryColumn({ default: Role.USER })
+  role: string;
 
   @Column({ unique: true })
   email: string;
@@ -22,8 +19,17 @@ export class User {
   @Column()
   password: string;
 
-  @Column({ default: Role.USER })
-  role: string;
+  @Column({ nullable: true })
+  first_name: string;
+
+  @Column({ nullable: true })
+  last_name: string;
+
+  @Column({ default: 0 })
+  points: number;
+
+  @Column({ nullable: true })
+  image: string;
 
   @CreateDateColumn()
   created_at: Date;

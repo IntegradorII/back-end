@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, ConflictException, Injectable } from '@nestjs/common';
 import { SignupDto } from './dto/signup.dto';
 import { UsersService } from 'src/users/users.service';
 import * as bcrypt from 'bcrypt';
@@ -17,11 +17,11 @@ export class AuthService {
     const { doc_type, doc_number, email, password } = signupDto;
     let user = await this.usersService.findOneByDocTypeAndDocNumber(doc_type, doc_number);
     if (user) {
-      throw new BadRequestException('User already exists');
+      throw new ConflictException('User already exists');
     }
     user = await this.usersService.findOneByEmail(email);
     if (user) {
-      throw new BadRequestException('Email already exists');
+      throw new ConflictException('Email already exists');
     }
     signupDto.password = await bcrypt.hash(password, 10);
 

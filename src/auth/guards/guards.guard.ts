@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { Request } from 'express';
 import { JwtService } from '@nestjs/jwt';
 import { jwtConstants } from '../constants/jwt.constants';
+import { Role } from 'src/common/enum/role.enum';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -16,6 +17,13 @@ export class AuthGuard implements CanActivate {
   ): boolean | Promise<boolean> | Observable<boolean> {
     
     const request = context.switchToHttp().getRequest<Request>();
+
+    const data = request.body;
+
+    if (data.role !== Role.ADMIN) {
+      return true;
+    }
+
     
     const token = this.extractTokenFromHeader(request);
 
