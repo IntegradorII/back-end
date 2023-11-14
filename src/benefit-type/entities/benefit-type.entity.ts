@@ -13,19 +13,19 @@ export class BenefitType {
   @Column({ type: 'text' })
   description: string;
 
-  @CreateDateColumn()
-  created_at: Date;
-
-  @UpdateDateColumn()
-  updated_at: Date;
-
-  @DeleteDateColumn()
-  deleted_at: Date;
-
   @OneToMany(() => Benefit, benefit => benefit.id, {
     cascade: true,
     onUpdate: 'CASCADE',
   })
   benefits: Benefit[];
+
+  @CreateDateColumn({ select: false })
+  created_at: Date;
+
+  @UpdateDateColumn({ select: false })
+  updated_at: Date;
+
+  @DeleteDateColumn({ select: false })
+  deleted_at: Date;
 
 }

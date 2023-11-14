@@ -2,7 +2,10 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { SegmentsService } from './segments.service';
 import { CreateSegmentDto } from './dto/create-segment.dto';
 import { UpdateSegmentDto } from './dto/update-segment.dto';
+import { Auth } from '@/auth/decorators/auth.decorator';
+import { Role } from '@/common/enum/role.enum';
 
+@Auth(Role.ADMIN)
 @Controller('segments')
 export class SegmentsController {
   constructor(private readonly segmentsService: SegmentsService) {}

@@ -12,5 +12,6 @@ import { Segment } from './entities/segment.entity';
   ],
   controllers: [SegmentsController],
   providers: [SegmentsService],
+  exports: [SegmentsService]
 })
 export class SegmentsModule {}

@@ -1,5 +1,6 @@
 import { BenefitType } from '@/benefit-type/entities/benefit-type.entity';
-import { Column, CreateDateColumn, DeleteDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { SegmentBenefit } from '@/segment-benefit/entities/segment-benefit.entity';
+import { Column, CreateDateColumn, DeleteDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 
 @Entity()
 export class Benefit {
@@ -15,15 +16,6 @@ export class Benefit {
 
   @Column({ type: 'date', nullable: true })
   expiration_date: Date;
-
-  @CreateDateColumn()
-  created_at: Date;
-
-  @UpdateDateColumn()
-  updated_at: Date;
-
-  @DeleteDateColumn()
-  deleted_at: Date;
   
   @ManyToOne(() => BenefitType, benefitType => benefitType.id, {
     eager: true,
@@ -32,5 +24,20 @@ export class Benefit {
     onUpdate: 'CASCADE',
   })
   benefit_type: BenefitType;
+
+  @OneToMany(() => SegmentBenefit, segmentBenefit => segmentBenefit.id, {
+    cascade: true,
+    onUpdate: 'CASCADE',
+  })
+  segments: SegmentBenefit[];
+
+  @CreateDateColumn({ select: false })
+  created_at: Date;
+
+  @UpdateDateColumn({ select: false })
+  updated_at: Date;
+
+  @DeleteDateColumn({ select: false })
+  deleted_at: Date;
 
 }

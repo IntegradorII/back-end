@@ -12,5 +12,6 @@ import { BenefitTypeModule } from '@/benefit-type/benefit-type.module';
   ],
   controllers: [BenefitsController],
   providers: [BenefitsService],
+  exports: [BenefitsService],
 })
 export class BenefitsModule {}

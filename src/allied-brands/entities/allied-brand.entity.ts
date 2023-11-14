@@ -15,13 +15,13 @@ export class AlliedBrand {
   @Column({ type: 'text' })
   image: string;
 
-  @CreateDateColumn()
+  @CreateDateColumn({ select: false })
   created_at: Date;
 
-  @UpdateDateColumn()
+  @UpdateDateColumn({ select: false })
   updated_at: Date;
 
-  @DeleteDateColumn({ nullable: true })
+  @DeleteDateColumn({ select: false })
   deleted_at: Date;
 
 }
