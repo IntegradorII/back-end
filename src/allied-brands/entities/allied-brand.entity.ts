@@ -1,7 +1,8 @@
-import { Column, CreateDateColumn, DeleteDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { BaseEntity } from '@/common/config/base.entity';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
-export class AlliedBrand {
+export class AlliedBrand extends BaseEntity {
 
   @PrimaryGeneratedColumn()
   id: number;
@@ -14,14 +15,5 @@ export class AlliedBrand {
 
   @Column({ type: 'text' })
   image: string;
-
-  @CreateDateColumn({ select: false })
-  created_at: Date;
-
-  @UpdateDateColumn({ select: false })
-  updated_at: Date;
-
-  @DeleteDateColumn({ select: false })
-  deleted_at: Date;
 
 }

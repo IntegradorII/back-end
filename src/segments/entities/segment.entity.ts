@@ -1,8 +1,9 @@
+import { BaseEntity } from '@/common/config/base.entity';
 import { SegmentBenefit } from '@/segment-benefit/entities/segment-benefit.entity';
-import { Column, CreateDateColumn, DeleteDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
-export class Segment {
+export class Segment extends BaseEntity {
 
   @PrimaryGeneratedColumn()
   id: number;
@@ -22,14 +23,5 @@ export class Segment {
     onUpdate: 'CASCADE',
     })
   benefits: SegmentBenefit[];
-
-  @CreateDateColumn({ select: false })
-  created_at: Date;
-
-  @UpdateDateColumn({ select: false })
-  updated_at: Date;
-
-  @DeleteDateColumn({ select: false })
-  deleted_at: Date;
 
 }

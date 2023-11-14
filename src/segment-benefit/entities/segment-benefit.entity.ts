@@ -1,9 +1,10 @@
 import { Benefit } from '@/benefits/entities/benefit.entity';
 import { Segment } from '@/segments/entities/segment.entity';
-import { Column, CreateDateColumn, DeleteDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { BaseEntity } from '@/common/config/base.entity';
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
-export class SegmentBenefit {
+export class SegmentBenefit extends BaseEntity {
 
   @PrimaryGeneratedColumn()
   id: number;
@@ -28,14 +29,5 @@ export class SegmentBenefit {
 
   @Column({ type: 'int', nullable: false })
   amount: number;
-
-  @CreateDateColumn({ select: false })
-  created_at: Date;
-
-  @UpdateDateColumn({ select: false })
-  updated_at: Date;
-
-  @DeleteDateColumn({ select: false })
-  deleted_at: Date;
 
 }

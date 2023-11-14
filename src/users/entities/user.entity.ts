@@ -1,8 +1,9 @@
-import { Column, CreateDateColumn, DeleteDateColumn, Entity, PrimaryColumn, UpdateDateColumn } from 'typeorm';
+import { Column, Entity, PrimaryColumn } from 'typeorm';
 import { Role } from '@/common/enum/role.enum';
+import { BaseEntity } from '@/common/config/base.entity';
 
 @Entity()
-export class User {
+export class User extends BaseEntity {
 
   @PrimaryColumn()
   doc_type: string;
@@ -31,14 +32,5 @@ export class User {
 
   @Column({ nullable: true })
   image: string;
-
-  @CreateDateColumn({ select: false })
-  created_at: Date;
-
-  @UpdateDateColumn({ select: false })
-  updated_at: Date;
-
-  @DeleteDateColumn({ select: false })
-  deleted_at: Date;
 
 }

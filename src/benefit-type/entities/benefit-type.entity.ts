@@ -1,8 +1,9 @@
 import { Benefit } from '@/benefits/entities/benefit.entity';
-import { Column, CreateDateColumn, DeleteDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { BaseEntity } from '@/common/config/base.entity';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
-export class BenefitType {
+export class BenefitType extends BaseEntity {
 
   @PrimaryGeneratedColumn()
   id: number;
@@ -18,14 +19,5 @@ export class BenefitType {
     onUpdate: 'CASCADE',
   })
   benefits: Benefit[];
-
-  @CreateDateColumn({ select: false })
-  created_at: Date;
-
-  @UpdateDateColumn({ select: false })
-  updated_at: Date;
-
-  @DeleteDateColumn({ select: false })
-  deleted_at: Date;
 
 }
