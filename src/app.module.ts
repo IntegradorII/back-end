@@ -9,6 +9,7 @@ import { SegmentsModule } from './segments/segments.module';
 import { BrandsModule } from './brands/brands.module';
 import { BenefitsModule } from './benefits/benefits.module';
 import { CharacteristicsModule } from './characteristics/characteristics.module';
+import { BenefitTypeModule } from './benefit-type/benefit-type.module';
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ import { CharacteristicsModule } from './characteristics/characteristics.module'
     BrandsModule,
     BenefitsModule,
     CharacteristicsModule,
+    BenefitTypeModule,
   ],
   controllers: [AppController],
   providers: [AppService],

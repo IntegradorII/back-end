@@ -1,5 +1,5 @@
 import { applyDecorators, UseGuards } from '@nestjs/common';
-import { Role } from 'src/common/enum/role.enum';
+import { Role } from '@/common/enum/role.enum';
 import { RolesGuard } from '../guards/roles.guard';
 import { AuthGuard } from '../guards/auth.guard';
 import { Roles } from './roles.decorator';

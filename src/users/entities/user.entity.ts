@@ -1,5 +1,5 @@
 import { Column, CreateDateColumn, DeleteDateColumn, Entity, PrimaryColumn, UpdateDateColumn } from 'typeorm';
-import { Role } from 'src/common/enum/role.enum';
+import { Role } from '@/common/enum/role.enum';
 
 @Entity()
 export class User {
@@ -10,13 +10,13 @@ export class User {
   @PrimaryColumn()
   doc_number: string;
 
-  @PrimaryColumn({ default: Role.USER })
+  @PrimaryColumn({ type: 'enum', default: Role.USER, enum: Role })
   role: string;
 
   @Column({ unique: true })
   email: string;
 
-  @Column()
+  @Column({ select: false })
   password: string;
 
   @Column({ nullable: true })
@@ -27,7 +27,7 @@ export class User {
 
   // @Column({ default: 0, type: 'decimal', precision: 10, scale: 2 })
   @Column({ default: 0 })
-  points: number
+  points: number;
 
   @Column({ nullable: true })
   image: string;

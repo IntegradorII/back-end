@@ -1,6 +1,6 @@
 import { Transform } from 'class-transformer';
 import { IsEmail, IsEnum, IsInt, IsNotEmpty, IsNumberString, IsOptional, IsString, Length, MinLength } from 'class-validator';
-import { Role } from 'src/common/enum/role.enum';
+import { Role } from '@/common/enum/role.enum';
 
 export class SignupDto {
 

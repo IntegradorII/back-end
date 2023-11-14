@@ -1,4 +1,4 @@
-import { Role } from 'src/common/enum/role.enum';
+import { Role } from '@/common/enum/role.enum';
 
 export class CreateUserDto {
   doc_type: string;

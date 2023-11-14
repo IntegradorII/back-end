@@ -3,7 +3,7 @@ import { JwtService } from '@nestjs/jwt';
 import { Observable } from 'rxjs';
 import { jwtConstants } from '../constants/jwt.constants';
 import { Request } from 'express';
-import { Role } from 'src/common/enum/role.enum';
+import { Role } from '@/common/enum/role.enum';
 
 @Injectable()
 export class SignupGuard implements CanActivate {

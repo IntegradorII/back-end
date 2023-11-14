@@ -4,7 +4,7 @@ import { SignupDto } from './dto/signup.dto';
 import { SigninDto } from './dto/signin.dto';
 import { SignupGuard } from './guards/signup.guard';
 import { Auth } from './decorators/auth.decorator';
-import { Role } from 'src/common/enum/role.enum';
+import { Role } from '@/common/enum/role.enum';
 
 export interface UserData {
   email?: string;
@@ -30,7 +30,7 @@ export class AuthController {
       message: 'User created',
       user: req.user,
       data: res,
-    }
+    };
   }
 
   @Post('signin')

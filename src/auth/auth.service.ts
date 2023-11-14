@@ -20,7 +20,7 @@ export class AuthService {
     if (user) {
       throw new ConflictException('User already exists');
     }
-    user = await this.usersService.findOneByEmail(email);
+    user = await this.usersService.findByEmail(email);
     if (user) {
       throw new ConflictException('Email already exists');
     }
@@ -31,7 +31,7 @@ export class AuthService {
 
   async signin(signinDto: SigninDto) {
     const { email, password } = signinDto;
-    const user = await this.usersService.findOneByEmail(email);
+    const user = await this.usersService.findByEmailWithPassword(email);
     if (!user) {
       throw new BadRequestException('Invalid credentials');
     }
@@ -47,11 +47,11 @@ export class AuthService {
       access_token: accessToken,
       email: user.email,
       role: user.role,
-    }
+    };
   }
 
   async profile(user: UserData) {
-    return await this.usersService.findOneByEmail(user.email);
+    return await this.usersService.findByEmail(user.email);
   }
 
 }

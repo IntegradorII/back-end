@@ -19,12 +19,20 @@ export class UsersService {
     // return this.userRepository.save(createUserDto);
   }
 
-  findOneByEmail(email: string) {
-    return this.userRepository.findOneBy({ email })
+  findByEmail(email: string) {
+    return this.userRepository.findOneBy({ email });
+  }
+
+  findByEmailWithPassword(email: string) {
+    return this.userRepository.findOne({
+        where: { email },
+        select: [ 'doc_type', 'doc_number', 'email', 'password', 'role'],
+      }
+    );
   }
 
   findAll() {
-    return this.userRepository.find
+    return this.userRepository.find();
   }
 
   findOneByDocTypeAndDocNumber(doc_type: string, doc_number: string) {
