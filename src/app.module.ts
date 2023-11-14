@@ -6,10 +6,10 @@ import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { SalesModule } from './sales/sales.module';
 import { SegmentsModule } from './segments/segments.module';
-import { BrandsModule } from './brands/brands.module';
 import { BenefitsModule } from './benefits/benefits.module';
 import { CharacteristicsModule } from './characteristics/characteristics.module';
 import { BenefitTypeModule } from './benefit-type/benefit-type.module';
+import { AlliedBrandsModule } from './allied-brands/allied-brands.module';
 
 @Module({
   imports: [
@@ -29,10 +29,10 @@ import { BenefitTypeModule } from './benefit-type/benefit-type.module';
     UsersModule,
     SalesModule,
     SegmentsModule,
-    BrandsModule,
     BenefitsModule,
     CharacteristicsModule,
     BenefitTypeModule,
+    AlliedBrandsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
