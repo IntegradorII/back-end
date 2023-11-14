@@ -32,9 +32,15 @@ export class BenefitTypeService {
 
   async update(id: number, updateBenefitTypeDto: UpdateBenefitTypeDto) {
     
-    const benefitType = await this.findOne(id);
+    let benefitType = await this.findOne(id);
     if(!benefitType) {
       throw new NotFoundException('Benefit type not found');
+    }
+    if(updateBenefitTypeDto.type !== benefitType.type) {
+      benefitType = await this.findOneByType(updateBenefitTypeDto.type);
+      if(benefitType) {
+        throw new NotFoundException('Benefit type already exists');
+      }
     }
 
     return this.benefitTypeRepository.update(id, updateBenefitTypeDto);

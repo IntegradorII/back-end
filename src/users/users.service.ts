@@ -35,8 +35,8 @@ export class UsersService {
     return this.userRepository.find();
   }
 
-  findOneByDocTypeAndDocNumber(doc_type: string, doc_number: string) {
-    const user = this.userRepository.findOneBy({ doc_type, doc_number });
+  async findOneByDocTypeAndDocNumber(doc_type: string, doc_number: string) {
+    const user = await this.userRepository.findOneBy({ doc_type, doc_number });
     if (!user) {
       throw new NotFoundException('User not found');
     }

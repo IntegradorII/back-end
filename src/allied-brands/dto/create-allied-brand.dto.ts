@@ -1,4 +1,5 @@
-import { IsString, Length, MinLength } from 'class-validator';
+import { Transform } from 'class-transformer';
+import { IsNotEmpty, IsString, Length } from 'class-validator';
 
 export class CreateAlliedBrandDto {
 
@@ -7,11 +8,13 @@ export class CreateAlliedBrandDto {
   name: string;
 
   @IsString()
-  @MinLength(1)
+  @Transform(({ value }) => value.trim())
+  @IsNotEmpty()
   link: string;
 
   @IsString()
-  @MinLength(1)
+  @Transform(({ value }) => value.trim())
+  @IsNotEmpty()
   image: string;
 
 }

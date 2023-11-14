@@ -34,10 +34,16 @@ export class AlliedBrandsService {
     return this.alliedBrandRepository.findOneBy({ name });
   }
 
-  update(id: number, updateAlliedBrandDto: UpdateAlliedBrandDto) {
-    const alliedBrand = this.findOne(id);
+  async update(id: number, updateAlliedBrandDto: UpdateAlliedBrandDto) {
+    let alliedBrand = await this.findOne(id);
     if(!alliedBrand) {
       throw new NotFoundException('Allied brand not found');
+    }
+    if(updateAlliedBrandDto.name !== alliedBrand.name) {
+      alliedBrand = await this.findOneByName(updateAlliedBrandDto.name);
+      if(alliedBrand) {
+        throw new ConflictException('Allied brand name already exists');
+      }
     }
     return this.alliedBrandRepository.update(id, updateAlliedBrandDto);
   }

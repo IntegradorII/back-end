@@ -1,4 +1,5 @@
-import { IsNumber, IsString, Max, Min } from 'class-validator';
+import { Transform } from 'class-transformer';
+import { IsNotEmpty, IsNumber, IsString, Max, Min } from 'class-validator';
 
 export class CreateBenefitTypeDto {
 
@@ -8,6 +9,8 @@ export class CreateBenefitTypeDto {
   type: number;
 
   @IsString()
+  @Transform(({ value }) => value.trim())
+  @IsNotEmpty()
   description: string;
 
 }
