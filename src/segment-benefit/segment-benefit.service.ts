@@ -28,7 +28,6 @@ export class SegmentBenefitService {
     if(!benefit) {
       throw new NotFoundException('Benefit not found');
     }
-    console.log(segment, benefit);
     const segmentBenefit = await this.segmentBenefitRepository.findOneBy({
       segment_id: {
         id: segment_id,
@@ -37,7 +36,6 @@ export class SegmentBenefitService {
         id: benefit_id,
       },
     });
-    console.log(segmentBenefit);
     if(segmentBenefit) {
       throw new NotFoundException('Segment Benefit already exists');
     }

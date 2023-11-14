@@ -25,7 +25,9 @@ export class AuthController {
   @Post('signup')
   @UseGuards(SignupGuard)
   async signup(@Req() req: RequestWithUser, @Body() signupDto: SignupDto) {
+    console.log('req.user', req.user);
     const res = await this.authService.signup(signupDto);
+    console.log('res', res);
     return {
       message: 'User created',
       user: req.user,

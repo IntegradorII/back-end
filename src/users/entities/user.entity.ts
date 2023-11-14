@@ -1,6 +1,7 @@
-import { Column, Entity, PrimaryColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryColumn } from 'typeorm';
 import { Role } from '@/common/enum/role.enum';
 import { BaseEntity } from '@/common/config/base.entity';
+import { UserBenefit } from '@/user-benefit/entities/user-benefit.entity';
 
 @Entity()
 export class User extends BaseEntity {
@@ -32,5 +33,11 @@ export class User extends BaseEntity {
 
   @Column({ nullable: true })
   image: string;
+
+  @OneToMany(() => UserBenefit, userBenefit => userBenefit.id, {
+    cascade: true,
+    onUpdate: 'CASCADE',
+  })
+  benefits: UserBenefit[];
 
 }
