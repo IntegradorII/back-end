@@ -1,7 +1,8 @@
-import { Column, Entity, OneToMany, PrimaryColumn } from 'typeorm';
+import { Column, Entity, ManyToOne, OneToMany, PrimaryColumn } from 'typeorm';
 import { Role } from '@/common/enum/role.enum';
 import { BaseEntity } from '@/common/config/base.entity';
 import { UserBenefit } from '@/user-benefit/entities/user-benefit.entity';
+import { Segment } from '@/segments/entities/segment.entity';
 
 @Entity()
 export class User extends BaseEntity {
@@ -39,5 +40,12 @@ export class User extends BaseEntity {
     onUpdate: 'CASCADE',
   })
   benefits: UserBenefit[];
+
+  @ManyToOne(() => Segment, segment => segment.id, {
+    eager: true,
+    cascade: true,
+    onUpdate: 'CASCADE',
+  })
+  segment: Segment;
 
 }

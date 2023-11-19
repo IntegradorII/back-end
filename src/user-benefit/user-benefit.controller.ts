@@ -2,7 +2,10 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { UserBenefitService } from './user-benefit.service';
 import { CreateUserBenefitDto } from './dto/create-user-benefit.dto';
 import { UpdateUserBenefitDto } from './dto/update-user-benefit.dto';
+import { Auth } from '@/auth/decorators/auth.decorator';
+import { Role } from '@/common/enum/role.enum';
 
+@Auth(Role.ADMIN)
 @Controller('user-benefit')
 export class UserBenefitController {
   constructor(private readonly userBenefitService: UserBenefitService) {}

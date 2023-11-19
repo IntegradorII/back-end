@@ -1,1 +1,16 @@
-export class Characteristic {}
+import { BaseEntity } from '@/common/config/base.entity';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+
+@Entity()
+export class Characteristic extends BaseEntity {
+
+  @PrimaryGeneratedColumn()
+  id: number;
+
+  @Column({ type: 'varchar', length: 50, unique: true })
+  name: string;
+
+  @Column({ type: 'text' })
+  description: string;
+
+}

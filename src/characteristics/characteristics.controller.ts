@@ -2,7 +2,10 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { CharacteristicsService } from './characteristics.service';
 import { CreateCharacteristicDto } from './dto/create-characteristic.dto';
 import { UpdateCharacteristicDto } from './dto/update-characteristic.dto';
+import { Auth } from '@/auth/decorators/auth.decorator';
+import { Role } from '@/common/enum/role.enum';
 
+@Auth(Role.ADMIN)
 @Controller('characteristics')
 export class CharacteristicsController {
   constructor(private readonly characteristicsService: CharacteristicsService) {}

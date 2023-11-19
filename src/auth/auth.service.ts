@@ -11,7 +11,7 @@ export class AuthService {
 
   constructor(
     private readonly usersService: UsersService,
-    private readonly jwtService: JwtService
+    private readonly jwtService: JwtService,
   ) { }
 
   async signup(signupDto: SignupDto) {
@@ -24,6 +24,7 @@ export class AuthService {
     if (user) {
       throw new ConflictException('Email already exists');
     }
+
     signupDto.password = await bcrypt.hash(password, 10);
 
     return await this.usersService.create(signupDto);

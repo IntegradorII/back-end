@@ -15,7 +15,7 @@ export class UserBenefit extends BaseEntity {
     nullable: false,
     onUpdate: 'CASCADE',
   })
-  @JoinColumn({ name: 'user_id', referencedColumnName: 'email' })
+  @JoinColumn({ name: 'user_email', referencedColumnName: 'email' })
   user_email: User;
 
   @ManyToOne(() => Benefit, benefit => benefit.id, {
