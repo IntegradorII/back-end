@@ -23,12 +23,26 @@ export class KidProfileService {
         throw new ConflictException('Profile already exists');
       }
     }
+    const profile = await this.findByUserEmail(userEmail);
+    if(profile.length > 3) {
+      throw new ConflictException('User already has 3 profiles');
+    }
     const newProfile = this.kidProfileRepository.create(createKidProfileDto);
     return this.kidProfileRepository.save(newProfile);
   }
 
   findAll() {
     return this.kidProfileRepository.find();
+  }
+
+  findByUserEmail(userEmail: string) {
+    return this.kidProfileRepository.find({ 
+      where: {
+        user: {
+          email: userEmail
+        }
+      }
+    });
   }
 
   findOne(id: string) {
