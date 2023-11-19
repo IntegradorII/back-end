@@ -11,7 +11,7 @@ export interface UserData {
   role?: string;
 }
 
-interface RequestWithUser extends Request {
+export interface RequestWithUser extends Request {
   user: UserData;
 }
 

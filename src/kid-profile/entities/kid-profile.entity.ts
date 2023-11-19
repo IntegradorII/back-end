@@ -1,7 +1,7 @@
 import { BaseEntity } from '@/common/config/base.entity';
 import { BottomSize } from '@/common/enum/botton-size.enum';
 import { Gender } from '@/common/enum/gender.enum';
-import { IdType } from '@/common/enum/id-type.enum';
+import { DocType } from '@/common/enum/doc-type.enum';
 import { Relationship } from '@/common/enum/relationship.enum';
 import { TopSize } from '@/common/enum/top-size.enum';
 import { User } from '@/users/entities/user.entity';
@@ -10,7 +10,7 @@ import { Column, Entity, ManyToOne } from 'typeorm';
 @Entity()
 export class KidProfile extends BaseEntity {
   
-  @Column({ type: 'enum', enum: IdType })
+  @Column({ type: 'enum', enum: DocType })
   docType: string;
 
   @Column({ nullable: false })
@@ -20,7 +20,7 @@ export class KidProfile extends BaseEntity {
     cascade: true,
     onUpdate: 'CASCADE',
   })
-  userEmail: string;
+  user: User;
 
   @Column({ nullable: false })
   firstName: string;
@@ -35,7 +35,7 @@ export class KidProfile extends BaseEntity {
   gender: Gender;
 
   @Column({ nullable: false })
-  birth_date: Date;
+  birthDate: Date;
 
   @Column({ type: 'enum', enum: TopSize, nullable: false })
   topSize: TopSize;

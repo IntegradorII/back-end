@@ -3,12 +3,13 @@ import { Role } from '@/common/enum/role.enum';
 import { BaseEntity } from '@/common/config/base.entity';
 import { UserBenefit } from '@/user-benefit/entities/user-benefit.entity';
 import { Segment } from '@/segments/entities/segment.entity';
-import { IdType } from '@/common/enum/id-type.enum';
+import { DocType } from '@/common/enum/doc-type.enum';
+import { KidProfile } from '@/kid-profile/entities/kid-profile.entity';
 
 @Entity()
 export class User extends BaseEntity {
 
-  @Column({ type: 'enum', enum: IdType })
+  @Column({ type: 'enum', enum: DocType })
   docType: string;
 
   @Column()
@@ -47,5 +48,11 @@ export class User extends BaseEntity {
     onUpdate: 'CASCADE',
   })
   segment: Segment;
+
+  @OneToMany(() => KidProfile, kidProfile => kidProfile.id, {
+    cascade: true,
+    onUpdate: 'CASCADE',
+  })
+  kidProfiles: KidProfile[];
 
 }
