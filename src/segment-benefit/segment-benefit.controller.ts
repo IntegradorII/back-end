@@ -22,21 +22,21 @@ export class SegmentBenefitController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.segmentBenefitService.findOne(+id);
+    return this.segmentBenefitService.findOne(id);
   }
 
   @Get('segment/:id')
   findAllBySegmentId(@Param('id') id: string) {
-    return this.segmentBenefitService.findAllBySegmentId(+id);
+    return this.segmentBenefitService.findAllBySegmentId(id);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateSegmentBenefitDto: UpdateSegmentBenefitDto) {
-    return this.segmentBenefitService.update(+id, updateSegmentBenefitDto);
+    return this.segmentBenefitService.update(id, updateSegmentBenefitDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.segmentBenefitService.remove(+id);
+    return this.segmentBenefitService.remove(id);
   }
 }

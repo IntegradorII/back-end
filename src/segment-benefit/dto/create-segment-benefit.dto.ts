@@ -1,12 +1,12 @@
-import { IsInt, Min } from 'class-validator';
+import { IsInt, IsUUID, Min } from 'class-validator';
 
 export class CreateSegmentBenefitDto {
 
-  @IsInt()
-  segment_id: number;
+  @IsUUID()
+  segmentId: string;
 
-  @IsInt()
-  benefit_id: number;
+  @IsUUID()
+  benefitId: string;
 
   @IsInt()
   @Min(0)

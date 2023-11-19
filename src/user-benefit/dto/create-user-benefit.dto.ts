@@ -1,12 +1,12 @@
-import { IsDate, IsEmail, IsInt, IsOptional, Min } from 'class-validator';
+import { IsDate, IsEmail, IsInt, IsOptional, IsUUID, Min } from 'class-validator';
 
 export class CreateUserBenefitDto {
 
   @IsEmail()
-  user_email: string;
+  userEmail: string;
 
-  @IsInt()
-  benefit_id: number;
+  @IsUUID()
+  benefitId: string;
 
   @IsInt()
   @Min(0)
@@ -23,6 +23,6 @@ export class CreateUserBenefitDto {
 
   @IsOptional()
   @IsDate()
-  expiration_date: Date;
+  expirationDate: Date;
 
 }

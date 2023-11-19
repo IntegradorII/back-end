@@ -1,19 +1,16 @@
 import { BaseEntity } from '@/common/config/base.entity';
 import { SegmentBenefit } from '@/segment-benefit/entities/segment-benefit.entity';
 import { User } from '@/users/entities/user.entity';
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany } from 'typeorm';
 
 @Entity()
 export class Segment extends BaseEntity {
-
-  @PrimaryGeneratedColumn()
-  id: number;
 
   @Column({ type: 'varchar', length: 50, unique: true })
   name: string;
 
   @Column({ unique: true })
-  required_points: number;
+  requiredPoints: number;
 
   @Column({ type: 'text' })
   description: string;
@@ -25,11 +22,11 @@ export class Segment extends BaseEntity {
     })
   benefits: SegmentBenefit[];
 
-  @OneToMany(() => User, user => user.email, {
+  @OneToMany(() => User, user => user.id, {
     // eager: true,
     cascade: true,
     onUpdate: 'CASCADE',
   })
-  users_email: User[];
+  users: User[];
 
 }

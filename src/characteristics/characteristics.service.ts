@@ -29,7 +29,7 @@ export class CharacteristicsService {
     return this.characteristicRepository.find();
   }
 
-  findOne(id: number) {
+  findOne(id: string) {
     return this.characteristicRepository.findOneBy({ id });
   }
 
@@ -37,7 +37,7 @@ export class CharacteristicsService {
     return this.characteristicRepository.findOneBy({ name });
   }
 
-  async update(id: number, updateCharacteristicDto: UpdateCharacteristicDto) {
+  async update(id: string, updateCharacteristicDto: UpdateCharacteristicDto) {
     let characteristic = await this.findOne(id);
     if(!characteristic) {
       throw new NotFoundException('Characteristic not found');
@@ -52,7 +52,7 @@ export class CharacteristicsService {
     return this.characteristicRepository.update(id, updateCharacteristicDto);
   }
 
-  async remove(id: number) {
+  async remove(id: string) {
     const characteristic = await this.findOne(id);
     if(!characteristic) {
       throw new NotFoundException('Characteristic not found');

@@ -14,12 +14,12 @@ export class SegmentsService {
   ) { }
 
   async create(createSegmentDto: CreateSegmentDto) {
-    const { name, required_points } = createSegmentDto;
+    const { name, requiredPoints } = createSegmentDto;
     let segment = await this.segmentRepository.findOneBy({ name });
     if(segment) {
       throw new ConflictException('Segment already exists');
     }
-    segment = await this.segmentRepository.findOneBy({ required_points });
+    segment = await this.segmentRepository.findOneBy({ requiredPoints });
     if(segment){
       throw new ConflictException('Required points most be unique');
     }
@@ -34,12 +34,12 @@ export class SegmentsService {
   findAllByRequiredPointsSortAsc() {
     return this.segmentRepository.find({
       order: {
-        required_points: 'ASC',
+        requiredPoints: 'ASC',
       },
     });
   }
 
-  findOne(id: number) {
+  findOne(id: string) {
     return this.segmentRepository.findOneBy({ id });
   }
 
@@ -47,24 +47,24 @@ export class SegmentsService {
     return this.segmentRepository.findOneBy({ name });
   }
 
-  findOneByRequiredPoints(required_points: number) {
-    return this.segmentRepository.findOneBy({ required_points });
+  findOneByRequiredPoints(requiredPoints: number) {
+    return this.segmentRepository.findOneBy({ requiredPoints });
   }
 
-  async update(id: number, updateSegmentDto: UpdateSegmentDto) {
+  async update(id: string, updateSegmentDto: UpdateSegmentDto) {
     let segment = await this.findOne(id);
     if(!segment) {
       throw new NotFoundException('Segment not found');
     }
-    const { name, required_points } = updateSegmentDto;
+    const { name, requiredPoints } = updateSegmentDto;
     if(name !== segment.name) {
       segment = await this.findOneByName(name);
       if(segment) {
         throw new ConflictException('Segment name already exists');
       }
     }
-    if(required_points !== segment.required_points) {
-      segment = await this.findOneByRequiredPoints(required_points);
+    if(requiredPoints !== segment.requiredPoints) {
+      segment = await this.findOneByRequiredPoints(requiredPoints);
       if(segment) {
         throw new ConflictException('Required points already exists');
       }
@@ -72,7 +72,7 @@ export class SegmentsService {
     return this.segmentRepository.update(id, updateSegmentDto);
   }
 
-  async remove(id: number) {
+  async remove(id: string) {
     const segment = await this.findOne(id);
     if(!segment) {
       throw new NotFoundException('Segment not found');

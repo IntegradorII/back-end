@@ -29,7 +29,7 @@ export class UsersService {
     if(segments.length > 0) {
       let i = 0;
       while (i < segments.length) {
-        if (points >= segments[i].required_points) {
+        if (points >= segments[i].requiredPoints) {
           segment = segments[i];
         } else {
           break;
@@ -58,7 +58,7 @@ export class UsersService {
   findByEmailWithPassword(email: string) {
     return this.userRepository.findOne({
         where: { email },
-        select: [ 'doc_type', 'doc_number', 'email', 'password', 'role'],
+        select: [ 'docType', 'docNumber', 'email', 'password', 'role'],
       }
     );
   }
@@ -67,17 +67,20 @@ export class UsersService {
     return this.userRepository.find();
   }
 
-  async findOneByDocTypeAndDocNumber(doc_type: string, doc_number: string) {
-    const user = await this.userRepository.findOneBy({ doc_type, doc_number });
-    return user;
+  findOne(id: string) {
+    return this.userRepository.findOneBy({ id });
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
+  findOneByDocTypeAndDocNumber(docType: string, docNumber: string) {
+    return this.userRepository.findOneBy({ docType, docNumber });
+  }
+
+  update(id: string, updateUserDto: UpdateUserDto) {
     console.log('updateUserDto', updateUserDto);
     return `This action updates a #${id} user`;
   }
 
-  remove(id: number) {
+  remove(id: string) {
     return `This action removes a #${id} user`;
   }
 }

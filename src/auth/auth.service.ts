@@ -15,8 +15,8 @@ export class AuthService {
   ) { }
 
   async signup(signupDto: SignupDto) {
-    const { doc_type, doc_number, email, password } = signupDto;
-    let user = await this.usersService.findOneByDocTypeAndDocNumber(doc_type, doc_number);
+    const { docType, docNumber, email, password } = signupDto;
+    let user = await this.usersService.findOneByDocTypeAndDocNumber(docType, docNumber);
     if (user) {
       throw new ConflictException('User already exists');
     }

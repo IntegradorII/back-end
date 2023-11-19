@@ -12,6 +12,7 @@ import { BenefitTypeModule } from './benefit-type/benefit-type.module';
 import { AlliedBrandsModule } from './allied-brands/allied-brands.module';
 import { SegmentBenefitModule } from './segment-benefit/segment-benefit.module';
 import { UserBenefitModule } from './user-benefit/user-benefit.module';
+import { KidProfileModule } from './kid-profile/kid-profile.module';
 
 @Module({
   imports: [
@@ -37,6 +38,7 @@ import { UserBenefitModule } from './user-benefit/user-benefit.module';
     AlliedBrandsModule,
     SegmentBenefitModule,
     UserBenefitModule,
+    KidProfileModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -17,7 +17,7 @@ export class BenefitsService {
 
   async create(createBenefitDto: CreateBenefitDto) {
 
-    const type = createBenefitDto.benefit_type;
+    const type = createBenefitDto.benefitType;
     const benefitType = await this.benefitTypeService.findOneByType(type);
 
     if (!benefitType) {
@@ -27,7 +27,7 @@ export class BenefitsService {
     const newBenefit: DeepPartial<Benefit> = 
     {
       ...createBenefitDto,
-      benefit_type: benefitType,
+      benefitType: benefitType,
     };
 
     const benefit = this.benefitRepository.create(newBenefit);
@@ -40,11 +40,11 @@ export class BenefitsService {
     return this.benefitRepository.find();
   }
 
-  findOne(id: number) {
+  findOne(id: string) {
     return this.benefitRepository.findOneBy({ id });
   }
 
-  async update(id: number, updateBenefitDto: UpdateBenefitDto) {
+  async update(id: string, updateBenefitDto: UpdateBenefitDto) {
     const benefit = this.findOne(id);
     if(!benefit) {
       throw new NotFoundException('Benefit not found');
@@ -52,22 +52,22 @@ export class BenefitsService {
 
     const newBenefit: DeepPartial<Benefit> = {
       ...updateBenefitDto,
-      benefit_type: undefined
+      benefitType: undefined
     };
 
-    if(updateBenefitDto.benefit_type) {
-      const type = updateBenefitDto.benefit_type;
-      const benefitType = await this.benefitTypeService.findOne(type);
+    if(updateBenefitDto.benefitType) {
+      const type = updateBenefitDto.benefitType;
+      const benefitType = await this.benefitTypeService.findOneByType(type);
       if(!benefitType) {
         throw new NotFoundException('Benefit type not found');
       }
-      newBenefit.benefit_type = benefitType;
+      newBenefit.benefitType = benefitType;
     }
 
     return this.benefitRepository.update(id, newBenefit);
   }
 
-  remove(id: number) {
+  remove(id: string) {
     return this.benefitRepository.delete(id);
   }
 }

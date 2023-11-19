@@ -22,7 +22,7 @@ export class BenefitTypeService {
     return this.benefitTypeRepository.find();
   }
 
-  findOne(id: number) {
+  findOne(id: string) {
     return this.benefitTypeRepository.findOneBy({ id });
   }
 
@@ -30,7 +30,7 @@ export class BenefitTypeService {
     return this.benefitTypeRepository.findOneBy({ type });
   }
 
-  async update(id: number, updateBenefitTypeDto: UpdateBenefitTypeDto) {
+  async update(id: string, updateBenefitTypeDto: UpdateBenefitTypeDto) {
     
     let benefitType = await this.findOne(id);
     if(!benefitType) {
@@ -46,7 +46,7 @@ export class BenefitTypeService {
     return this.benefitTypeRepository.update(id, updateBenefitTypeDto);
   }
 
-  remove(id: number) {
+  remove(id: string) {
     return this.benefitTypeRepository.delete(id);
   }
 }

@@ -19,23 +19,24 @@ export class UserBenefitService {
 
   async create(createUserBenefitDto: CreateUserBenefitDto) {
 
-    const { user_email, benefit_id } = createUserBenefitDto;
+    const { userEmail, benefitId } = createUserBenefitDto;
 
-    const user = await this.usersService.findByEmail(user_email);
+    const user = await this.usersService.findByEmail(userEmail);
     if(!user) {
       throw new NotFoundException('User not found');
     }
-    const benefit = await this.benefitsService.findOne(benefit_id);
+    const benefit = await this.benefitsService.findOne(benefitId);
     if(!benefit) {
       throw new NotFoundException('Benefit not found');
     }
 
+
     const userBenefit = await this.userBenefitRepository.findOneBy({
-      user_email: {
-        email: user_email,
+      user: {
+        email: userEmail,
       },
-      benefit_id: {
-        id: benefit_id,
+      benefit: {
+        id: benefitId,
       },
     });
 
@@ -44,12 +45,12 @@ export class UserBenefitService {
     }
 
     const newUserBenefit = this.userBenefitRepository.create({
-      user_email: user,
-      benefit_id: benefit,
+      user,
+      benefit,
       amount: createUserBenefitDto.amount,
       remaining: createUserBenefitDto.remaining,
       estatus: createUserBenefitDto.estatus,
-      expiration_date: createUserBenefitDto.expiration_date,
+      expirationDate: createUserBenefitDto.expirationDate,
     });
 
     return this.userBenefitRepository.save(newUserBenefit);
@@ -59,63 +60,63 @@ export class UserBenefitService {
     return this.userBenefitRepository.find();
   }
 
-  findOne(id: number) {
+  findOne(id: string) {
     return this.userBenefitRepository.findOneBy({ id });
   }
 
-  findAllByUserEmail(user_email: string) {
+  findAllByUserEmail(userEmail: string) {
     return this.userBenefitRepository.find({
       where: {
-        user_email: {
-          email: user_email,
+        user: {
+          email: userEmail,
         },
       },
     });
   }
 
-  findAllByBenefitId(benefit_id: number) {
+  findAllByBenefitId(benefitId: string) {
     return this.userBenefitRepository.find({
       where: {
-        benefit_id: {
-          id: benefit_id,
+        benefit: {
+          id: benefitId,
         },
       },
     });
   }
 
-  async update(id: number, updateUserBenefitDto: UpdateUserBenefitDto) {
+  async update(id: string, updateUserBenefitDto: UpdateUserBenefitDto) {
     const userBenefit = await this.findOne(id);
     if(!userBenefit) {
       throw new NotFoundException('User Benefit not found');
     }
-    const { user_email, benefit_id, amount, remaining, estatus, expiration_date } = updateUserBenefitDto;
-    if(user_email && user_email !== userBenefit.user_email.email) {
-      const user = await this.usersService.findByEmail(user_email);
+    const { userEmail, benefitId, amount, remaining, estatus, expirationDate } = updateUserBenefitDto;
+    if(userEmail && userEmail !== userBenefit.user.email) {
+      const user = await this.usersService.findByEmail(userEmail);
       if(!user) {
         throw new NotFoundException('User not found');
       }
-      userBenefit.user_email = user;
+      userBenefit.user = user;
     }
 
-    if(benefit_id && benefit_id !== userBenefit.benefit_id.id) {
-      const benefit = await this.benefitsService.findOne(benefit_id);
+    if(benefitId && benefitId !== userBenefit.benefit.id) {
+      const benefit = await this.benefitsService.findOne(benefitId);
       if(!benefit) {
         throw new NotFoundException('Benefit not found');
       }
-      userBenefit.benefit_id = benefit;
+      userBenefit.benefit = benefit;
     }
 
     return this.userBenefitRepository.update(id, {
-      user_email: user_email ? userBenefit.user_email: undefined,
-      benefit_id: benefit_id ? userBenefit.benefit_id: undefined,
+      user: userEmail ? userBenefit.user: undefined,
+      benefit: benefitId ? userBenefit.benefit: undefined,
       amount,
       remaining,
       estatus,
-      expiration_date,
+      expirationDate,
     });
   }
 
-  remove(id: number) {
+  remove(id: string) {
     const userBenefit = this.findOne(id);
     if(!userBenefit) {
       throw new NotFoundException('User Benefit not found');

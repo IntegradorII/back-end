@@ -20,18 +20,22 @@ export class UsersController {
     return this.usersService.findAll();
   }
 
-  @Get(':doc_type/:doc_number')
-  findOneByDocTypeAndDocNumber(@Param('doc_type') doc_type: string, @Param('doc_number') doc_number: string) {
-    return this.usersService.findOneByDocTypeAndDocNumber(doc_type, doc_number);
+  findOne(id: string) {
+    return this.usersService.findOne(id);
+  }
+
+  @Get(':docType/:docNumber')
+  findOneByDocTypeAndDocNumber(@Param('docType') docType: string, @Param('docNumber') docNumber: string) {
+    return this.usersService.findOneByDocTypeAndDocNumber(docType, docNumber);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    return this.usersService.update(+id, updateUserDto);
+    return this.usersService.update(id, updateUserDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.usersService.remove(+id);
+    return this.usersService.remove(id);
   }
 }

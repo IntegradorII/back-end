@@ -1,19 +1,20 @@
-import { Column, Entity, ManyToOne, OneToMany, PrimaryColumn } from 'typeorm';
+import { Column, Entity, ManyToOne, OneToMany } from 'typeorm';
 import { Role } from '@/common/enum/role.enum';
 import { BaseEntity } from '@/common/config/base.entity';
 import { UserBenefit } from '@/user-benefit/entities/user-benefit.entity';
 import { Segment } from '@/segments/entities/segment.entity';
+import { IdType } from '@/common/enum/id-type.enum';
 
 @Entity()
 export class User extends BaseEntity {
 
-  @PrimaryColumn()
-  doc_type: string;
+  @Column({ type: 'enum', enum: IdType })
+  docType: string;
 
-  @PrimaryColumn()
-  doc_number: string;
+  @Column()
+  docNumber: string;
 
-  @PrimaryColumn({ type: 'enum', default: Role.USER, enum: Role })
+  @Column({ type: 'enum', default: Role.USER, enum: Role })
   role: string;
 
   @Column({ unique: true })
@@ -23,16 +24,16 @@ export class User extends BaseEntity {
   password: string;
 
   @Column({ nullable: true })
-  first_name: string;
+  firstName: string;
 
   @Column({ nullable: true })
-  last_name: string;
+  lastName: string;
 
   // @Column({ default: 0, type: 'decimal', precision: 10, scale: 2 })
   @Column({ default: 0 })
   points: number;
 
-  @Column({ nullable: true })
+  @Column({ type: 'text', nullable: true })
   image: string;
 
   @OneToMany(() => UserBenefit, userBenefit => userBenefit.id, {
@@ -42,7 +43,6 @@ export class User extends BaseEntity {
   benefits: UserBenefit[];
 
   @ManyToOne(() => Segment, segment => segment.id, {
-    eager: true,
     cascade: true,
     onUpdate: 'CASCADE',
   })

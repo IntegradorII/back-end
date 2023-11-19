@@ -10,7 +10,7 @@ export class CreateSegmentDto {
 
   @IsInt()
   @Min(0)
-  required_points: number;
+  requiredPoints: number;
 
   @IsString()
   @Transform(({ value }) => value.trim())

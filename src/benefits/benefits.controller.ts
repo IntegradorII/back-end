@@ -22,16 +22,16 @@ export class BenefitsController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.benefitsService.findOne(+id);
+    return this.benefitsService.findOne(id);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateBenefitDto: UpdateBenefitDto) {
-    return this.benefitsService.update(+id, updateBenefitDto);
+    return this.benefitsService.update(id, updateBenefitDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.benefitsService.remove(+id);
+    return this.benefitsService.remove(id);
   }
 }

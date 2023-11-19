@@ -22,16 +22,16 @@ export class CharacteristicsController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.characteristicsService.findOne(+id);
+    return this.characteristicsService.findOne(id);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateCharacteristicDto: UpdateCharacteristicDto) {
-    return this.characteristicsService.update(+id, updateCharacteristicDto);
+    return this.characteristicsService.update(id, updateCharacteristicDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.characteristicsService.remove(+id);
+    return this.characteristicsService.remove(id);
   }
 }

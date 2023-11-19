@@ -19,29 +19,29 @@ export class SegmentBenefitService {
   ) {}
 
   async create(createSegmentBenefitDto: CreateSegmentBenefitDto) {
-    const { segment_id, benefit_id } = createSegmentBenefitDto;
-    const segment = await this.segmentsService.findOne(segment_id);
+    const { segmentId, benefitId } = createSegmentBenefitDto;
+    const segment = await this.segmentsService.findOne(segmentId);
     if(!segment) {
       throw new NotFoundException('Segment not found');
     }
-    const benefit = await this.benefitService.findOne(benefit_id);
+    const benefit = await this.benefitService.findOne(benefitId);
     if(!benefit) {
       throw new NotFoundException('Benefit not found');
     }
     const segmentBenefit = await this.segmentBenefitRepository.findOneBy({
-      segment_id: {
-        id: segment_id,
+      segment: {
+        id: segmentId,
       },
-      benefit_id: {
-        id: benefit_id,
+      benefit: {
+        id: benefitId,
       },
     });
     if(segmentBenefit) {
       throw new NotFoundException('Segment Benefit already exists');
     }
     const newSegmentBenefit = this.segmentBenefitRepository.create({
-      segment_id: segment,
-      benefit_id: benefit,
+      segment,
+      benefit,
       amount: createSegmentBenefitDto.amount,
     });
     return this.segmentBenefitRepository.save(newSegmentBenefit);
@@ -51,48 +51,48 @@ export class SegmentBenefitService {
     return this.segmentBenefitRepository.find();
   }
 
-  findAllBySegmentId(segment_id: number) {
+  findAllBySegmentId(segmentId: string) {
     return this.segmentBenefitRepository.find({
       where: {
-        segment_id: {
-          id: segment_id,
+        segment: {
+          id: segmentId,
         },
       },
     });
   }
 
-  findOne(id: number) {
+  findOne(id: string) {
     return this.segmentBenefitRepository.findOneBy({ id });
   }
 
-  async update(id: number, updateSegmentBenefitDto: UpdateSegmentBenefitDto) {
+  async update(id: string, updateSegmentBenefitDto: UpdateSegmentBenefitDto) {
     const segmentBenefit = await this.segmentBenefitRepository.findOneBy({ id });
     if(!segmentBenefit) {
       throw new NotFoundException('Segment Benefit not found');
     }
-    const { segment_id, benefit_id, amount } = updateSegmentBenefitDto;
-    if(segment_id && segment_id !== segmentBenefit.segment_id.id) {
-      const segment = await this.segmentsService.findOne(segment_id);
+    const { segmentId, benefitId, amount } = updateSegmentBenefitDto;
+    if(segmentId && segmentId !== segmentBenefit.segment.id) {
+      const segment = await this.segmentsService.findOne(segmentId);
       if(!segment) {
         throw new NotFoundException('Segment not found');
       }
-      segmentBenefit.segment_id = segment;
+      segmentBenefit.segment = segment;
     }
-    if(benefit_id && benefit_id !== segmentBenefit.benefit_id.id) {
-      const benefit = await this.benefitService.findOne(benefit_id);
+    if(benefitId && benefitId !== segmentBenefit.benefit.id) {
+      const benefit = await this.benefitService.findOne(benefitId);
       if(!benefit) {
         throw new NotFoundException('Benefit not found');
       }
-      segmentBenefit.benefit_id = benefit;
+      segmentBenefit.benefit = benefit;
     }
     return this.segmentBenefitRepository.update(id, {
       amount,
-      segment_id: segment_id ? segmentBenefit.segment_id : undefined,
-      benefit_id: benefit_id ? segmentBenefit.benefit_id : undefined,
+      segment: segmentId ? segmentBenefit.segment : undefined,
+      benefit: benefitId ? segmentBenefit.benefit : undefined,
     });
   }
 
-  async remove(id: number) {
+  async remove(id: string) {
     const segmentBenefit = await this.segmentBenefitRepository.findOneBy({ id });
     if(!segmentBenefit) {
       throw new NotFoundException('Segment Benefit not found');

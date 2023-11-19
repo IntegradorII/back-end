@@ -6,11 +6,11 @@ export class SignupDto {
 
   @IsString()
   @Length(2)
-  doc_type: string;
+  docType: string;
 
   @IsNumberString()
   @Length(6, 10)
-  doc_number: string;
+  docNumber: string;
 
   @IsOptional()
   @IsEnum(Role)
@@ -28,13 +28,13 @@ export class SignupDto {
   @IsString()
   @Transform(({ value }) => value.trim())
   @IsNotEmpty()
-  first_name?: string;
+  firstName?: string;
 
   @IsOptional()
   @IsString()
   @Transform(({ value }) => value.trim())
   @IsNotEmpty()
-  last_name?: string;
+  lastName?: string;
 
   @IsOptional()
   // @IsNumber({ maxDecimalPlaces: 0 })

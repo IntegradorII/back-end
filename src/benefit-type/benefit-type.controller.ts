@@ -1,9 +1,10 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, BadRequestException } from '@nestjs/common';
 import { BenefitTypeService } from './benefit-type.service';
 import { CreateBenefitTypeDto } from './dto/create-benefit-type.dto';
 import { UpdateBenefitTypeDto } from './dto/update-benefit-type.dto';
 import { Auth } from '@/auth/decorators/auth.decorator';
 import { Role } from '@/common/enum/role.enum';
+import { isUUID } from 'class-validator';
 
 @Auth(Role.ADMIN)
 @Controller('benefit-type')
@@ -20,18 +21,30 @@ export class BenefitTypeController {
     return this.benefitTypeService.findAll();
   }
 
-  @Get(':type')
-  findOne(@Param('type') type: string) {
-    return this.benefitTypeService.findOne(+type);
+  @Get(':id')
+  async findOne(@Param('id') id: string) {
+    if(!isUUID(id)) {
+      throw new BadRequestException('User not found');
+    }
+    return await this.benefitTypeService.findOne(id);
   }
 
-  @Patch(':type')
-  update(@Param('type') type: string, @Body() updateBenefitTypeDto: UpdateBenefitTypeDto) {
-    return this.benefitTypeService.update(+type, updateBenefitTypeDto);
+  @Get('type/:type')
+  async findOneByType(@Param('type') type: string) {
+    // validemos que el tipo sea un numero
+    if(isNaN(+type)) {
+      throw new BadRequestException('Benefit type not found');
+    }
+    return await this.benefitTypeService.findOneByType(+type);
   }
 
-  @Delete(':type')
-  remove(@Param('type') type: string) {
-    return this.benefitTypeService.remove(+type);
+  @Patch(':id')
+  update(@Param('id') id: string, @Body() updateBenefitTypeDto: UpdateBenefitTypeDto) {
+    return this.benefitTypeService.update(id, updateBenefitTypeDto);
+  }
+
+  @Delete(':id')
+  remove(@Param('id') id: string) {
+    return this.benefitTypeService.remove(id);
   }
 }

@@ -22,16 +22,16 @@ export class AlliedBrandsController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.alliedBrandsService.findOne(+id);
+    return this.alliedBrandsService.findOne(id);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateAlliedBrandDto: UpdateAlliedBrandDto) {
-    return this.alliedBrandsService.update(+id, updateAlliedBrandDto);
+    return this.alliedBrandsService.update(id, updateAlliedBrandDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.alliedBrandsService.remove(+id);
+    return this.alliedBrandsService.remove(id);
   }
 }

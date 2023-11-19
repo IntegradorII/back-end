@@ -1,18 +1,18 @@
-import { CreateDateColumn, DeleteDateColumn, UpdateDateColumn } from 'typeorm';
+import { CreateDateColumn, DeleteDateColumn, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 
 
 export abstract class BaseEntity {
 
-  // @PrimaryGeneratedColumn('uuid')
-  // id: string;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
   
   @CreateDateColumn({ select: false })
-  created_at: Date;
+  createdAt: Date;
 
   @UpdateDateColumn({ select: false })
-  updated_at: Date;
+  updatedAt: Date;
 
   @DeleteDateColumn({ select: false })
-  deleted_at: Date;
+  deletedAt: Date;
 
 }

@@ -6,7 +6,7 @@ export class CreateBenefitDto {
   value: number;
 
   @IsNumber()
-  benefit_type: number;
+  benefitType: number;
 
   @IsOptional()
   @IsInt()

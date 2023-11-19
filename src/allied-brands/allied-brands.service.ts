@@ -26,7 +26,7 @@ export class AlliedBrandsService {
     return this.alliedBrandRepository.find();
   }
 
-  findOne(id: number) {
+  findOne(id: string) {
     return this.alliedBrandRepository.findOneBy({ id });
   }
 
@@ -34,7 +34,7 @@ export class AlliedBrandsService {
     return this.alliedBrandRepository.findOneBy({ name });
   }
 
-  async update(id: number, updateAlliedBrandDto: UpdateAlliedBrandDto) {
+  async update(id: string, updateAlliedBrandDto: UpdateAlliedBrandDto) {
     let alliedBrand = await this.findOne(id);
     if(!alliedBrand) {
       throw new NotFoundException('Allied brand not found');
@@ -48,7 +48,7 @@ export class AlliedBrandsService {
     return this.alliedBrandRepository.update(id, updateAlliedBrandDto);
   }
 
-  remove(id: number) {
+  remove(id: string) {
     return this.alliedBrandRepository.delete(id);
   }
 }

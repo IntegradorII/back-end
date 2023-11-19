@@ -1,15 +1,12 @@
 import { BenefitType } from '@/benefit-type/entities/benefit-type.entity';
 import { SegmentBenefit } from '@/segment-benefit/entities/segment-benefit.entity';
 import { BaseEntity } from '@/common/config/base.entity';
-import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, ManyToOne, OneToMany } from 'typeorm';
 import { UserBenefit } from '@/user-benefit/entities/user-benefit.entity';
 
 @Entity()
 export class Benefit extends BaseEntity {
   
-  @PrimaryGeneratedColumn()
-  id: number;
-
   @Column({ type: 'decimal', precision: 10, scale: 2 })
   value: number;
 
@@ -17,15 +14,15 @@ export class Benefit extends BaseEntity {
   estatus: number;
 
   @Column({ type: 'date', nullable: true })
-  expiration_date: Date;
+  expirationDate: Date;
   
   @ManyToOne(() => BenefitType, benefitType => benefitType.id, {
-    eager: true,
     cascade: true,
     nullable: false,
     onUpdate: 'CASCADE',
   })
-  benefit_type: BenefitType;
+  // @JoinColumn({ name: 'benefit_type' })
+  benefitType: BenefitType;
 
   @OneToMany(() => SegmentBenefit, segmentBenefit => segmentBenefit.id, {
     cascade: true,

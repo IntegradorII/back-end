@@ -22,16 +22,16 @@ export class SegmentsController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.segmentsService.findOne(+id);
+    return this.segmentsService.findOne(id);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateSegmentDto: UpdateSegmentDto) {
-    return this.segmentsService.update(+id, updateSegmentDto);
+    return this.segmentsService.update(id, updateSegmentDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.segmentsService.remove(+id);
+    return this.segmentsService.remove(id);
   }
 }
