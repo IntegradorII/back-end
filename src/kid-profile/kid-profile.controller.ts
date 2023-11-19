@@ -13,8 +13,8 @@ export class KidProfileController {
   constructor(private readonly kidProfileService: KidProfileService) {}
 
   @Post()
-  create(@Body() createKidProfileDto: CreateKidProfileDto) {
-    return this.kidProfileService.create(createKidProfileDto);
+  create(@Body() createKidProfileDto: CreateKidProfileDto, @Req() req: RequestWithUser) {
+    return this.kidProfileService.create(createKidProfileDto, req.user);
   }
 
   @Get()

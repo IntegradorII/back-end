@@ -19,6 +19,7 @@ export class KidProfile extends BaseEntity {
   @ManyToOne(() => User, user => user.id, {
     cascade: true,
     onUpdate: 'CASCADE',
+    nullable: false
   })
   user: User;
 

@@ -21,7 +21,7 @@ export class UserBenefitService {
 
     const { userEmail, benefitId } = createUserBenefitDto;
 
-    const user = await this.usersService.findByEmail(userEmail);
+    const user = await this.usersService.findOneByEmail(userEmail);
     if(!user) {
       throw new NotFoundException('User not found');
     }
@@ -91,7 +91,7 @@ export class UserBenefitService {
     }
     const { userEmail, benefitId, amount, remaining, estatus, expirationDate } = updateUserBenefitDto;
     if(userEmail && userEmail !== userBenefit.user.email) {
-      const user = await this.usersService.findByEmail(userEmail);
+      const user = await this.usersService.findOneByEmail(userEmail);
       if(!user) {
         throw new NotFoundException('User not found');
       }

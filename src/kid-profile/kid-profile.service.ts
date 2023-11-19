@@ -6,28 +6,46 @@ import { KidProfile } from './entities/kid-profile.entity';
 import { Repository } from 'typeorm';
 import { UserData } from '@/auth/auth.controller';
 import { Role } from '@/common/enum/role.enum';
+import { UsersService } from '@/users/users.service';
 
 @Injectable()
 export class KidProfileService {
 
   constructor(
     @InjectRepository(KidProfile)
-    private readonly kidProfileRepository: Repository<KidProfile>
+    private readonly kidProfileRepository: Repository<KidProfile>,
+    private readonly usersService: UsersService
   ) {}
 
-  async create(createKidProfileDto: CreateKidProfileDto) {
+  async create(createKidProfileDto: CreateKidProfileDto, user: UserData) {
     const { docType, docNumber, userEmail } = createKidProfileDto;
+    if(user.role === Role.USER) {
+      if(userEmail && userEmail !== user.email) {
+        throw new BadRequestException('Cannot create profile for other user');
+      }
+    } else {
+      if(!userEmail) {
+        throw new BadRequestException('User email is required');
+      }
+    }
+    const myuser = await this.usersService.findOneByEmail(userEmail);
+    if(!myuser) {
+      throw new NotFoundException('User not found');
+    }
     const profiles = await this.findByDocTypeAndDocNumber(docType, docNumber);
     for(const profile of profiles) {
       if(profile && profile.user.email === userEmail) {
         throw new ConflictException('Profile already exists');
       }
     }
-    const profile = await this.findByUserEmail(userEmail);
+    const profile = await this.findByUserEmail(user.email);
     if(profile.length > 3) {
       throw new ConflictException('User already has 3 profiles');
     }
-    const newProfile = this.kidProfileRepository.create(createKidProfileDto);
+    const newProfile = this.kidProfileRepository.create({
+      ...createKidProfileDto,
+      user: myuser
+    });
     return this.kidProfileRepository.save(newProfile);
   }
 

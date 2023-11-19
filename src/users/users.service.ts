@@ -51,7 +51,7 @@ export class UsersService {
     return this.userRepository.save(user);
   }
 
-  findByEmail(email: string) {
+  findOneByEmail(email: string) {
     return this.userRepository.findOneBy({ email });
   }
 

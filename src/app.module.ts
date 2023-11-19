@@ -13,6 +13,7 @@ import { AlliedBrandsModule } from './allied-brands/allied-brands.module';
 import { SegmentBenefitModule } from './segment-benefit/segment-benefit.module';
 import { UserBenefitModule } from './user-benefit/user-benefit.module';
 import { KidProfileModule } from './kid-profile/kid-profile.module';
+import { PetProfileModule } from './pet-profile/pet-profile.module';
 
 @Module({
   imports: [
@@ -39,6 +40,7 @@ import { KidProfileModule } from './kid-profile/kid-profile.module';
     SegmentBenefitModule,
     UserBenefitModule,
     KidProfileModule,
+    PetProfileModule,
   ],
   controllers: [AppController],
   providers: [AppService],

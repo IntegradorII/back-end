@@ -20,7 +20,7 @@ export class AuthService {
     if (user) {
       throw new ConflictException('User already exists');
     }
-    user = await this.usersService.findByEmail(email);
+    user = await this.usersService.findOneByEmail(email);
     if (user) {
       throw new ConflictException('Email already exists');
     }
@@ -52,7 +52,7 @@ export class AuthService {
   }
 
   async profile(user: UserData) {
-    return await this.usersService.findByEmail(user.email);
+    return await this.usersService.findOneByEmail(user.email);
   }
 
 }
