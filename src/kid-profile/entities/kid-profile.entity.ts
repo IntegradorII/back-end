@@ -35,7 +35,7 @@ export class KidProfile extends BaseEntity {
   @Column({ type: 'enum', enum: Gender, nullable: false })
   gender: Gender;
 
-  @Column({ nullable: false })
+  @Column({ nullable: false, type: 'date' })
   birthDate: Date;
 
   @Column({ type: 'enum', enum: TopSize, nullable: false })

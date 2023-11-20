@@ -10,5 +10,6 @@ import { Characteristic } from './entities/characteristic.entity';
   ],
   controllers: [CharacteristicsController],
   providers: [CharacteristicsService],
+  exports: [CharacteristicsService],
 })
 export class CharacteristicsModule {}

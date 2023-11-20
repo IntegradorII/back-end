@@ -20,7 +20,7 @@ export class KidProfileService {
   async create(createKidProfileDto: CreateKidProfileDto, user: UserData) {
     const { docType, docNumber, userEmail } = createKidProfileDto;
     if(user.role === Role.USER) {
-      if(userEmail && userEmail !== user.email) {
+      if(userEmail !== user.email) {
         throw new BadRequestException('Cannot create profile for other user');
       }
     } else {
@@ -32,15 +32,14 @@ export class KidProfileService {
     if(!myuser) {
       throw new NotFoundException('User not found');
     }
-    const profiles = await this.findByDocTypeAndDocNumber(docType, docNumber);
+    const profiles = await this.findByUserEmail(userEmail);
+    if(profiles.length > 2) {
+      throw new ConflictException('User already has 3 profiles');
+    }
     for(const profile of profiles) {
-      if(profile && profile.user.email === userEmail) {
+      if(profile.docType === docType && profile.docNumber === docNumber) {
         throw new ConflictException('Profile already exists');
       }
-    }
-    const profile = await this.findByUserEmail(user.email);
-    if(profile.length > 3) {
-      throw new ConflictException('User already has 3 profiles');
     }
     const newProfile = this.kidProfileRepository.create({
       ...createKidProfileDto,

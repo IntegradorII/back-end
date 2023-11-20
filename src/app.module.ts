@@ -14,6 +14,7 @@ import { SegmentBenefitModule } from './segment-benefit/segment-benefit.module';
 import { UserBenefitModule } from './user-benefit/user-benefit.module';
 import { KidProfileModule } from './kid-profile/kid-profile.module';
 import { PetProfileModule } from './pet-profile/pet-profile.module';
+import { PetCharacteristicModule } from './pet-characteristic/pet-characteristic.module';
 
 @Module({
   imports: [
@@ -41,6 +42,7 @@ import { PetProfileModule } from './pet-profile/pet-profile.module';
     UserBenefitModule,
     KidProfileModule,
     PetProfileModule,
+    PetCharacteristicModule,
   ],
   controllers: [AppController],
   providers: [AppService],
