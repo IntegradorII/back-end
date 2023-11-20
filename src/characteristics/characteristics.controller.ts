@@ -4,9 +4,10 @@ import { CreateCharacteristicDto } from './dto/create-characteristic.dto';
 import { UpdateCharacteristicDto } from './dto/update-characteristic.dto';
 import { Auth } from '@/auth/decorators/auth.decorator';
 import { Role } from '@/common/enum/role.enum';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
 @ApiTags('characteristics')
+@ApiBearerAuth()
 @Auth(Role.ADMIN)
 @Controller('characteristics')
 export class CharacteristicsController {

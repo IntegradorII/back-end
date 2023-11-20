@@ -4,9 +4,10 @@ import { CreateUserBenefitDto } from './dto/create-user-benefit.dto';
 import { UpdateUserBenefitDto } from './dto/update-user-benefit.dto';
 import { Auth } from '@/auth/decorators/auth.decorator';
 import { Role } from '@/common/enum/role.enum';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
 @ApiTags('user-benefit')
+@ApiBearerAuth()
 @Auth(Role.ADMIN)
 @Controller('user-benefit')
 export class UserBenefitController {

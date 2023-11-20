@@ -52,6 +52,16 @@ export class KidProfileService {
     return this.kidProfileRepository.find();
   }
 
+  findByUserId(userId: string) {
+    return this.kidProfileRepository.find({ 
+      where: {
+        user: {
+          id: userId
+        }
+      }
+    });
+  }
+
   findByUserEmail(userEmail: string) {
     return this.kidProfileRepository.find({ 
       where: {

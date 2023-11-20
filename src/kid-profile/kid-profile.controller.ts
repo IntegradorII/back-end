@@ -6,9 +6,10 @@ import { isUUID } from 'class-validator';
 import { Auth } from '@/auth/decorators/auth.decorator';
 import { Role } from '@/common/enum/role.enum';
 import { RequestWithUser } from '@/auth/auth.controller';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
 @ApiTags('kid-profile')
+@ApiBearerAuth()
 @Auth(Role.ADMIN, Role.USER)
 @Controller('kid-profile')
 export class KidProfileController {
@@ -23,6 +24,12 @@ export class KidProfileController {
   findAll() {
     return this.kidProfileService.findAll();
   }
+
+  @Get('user/:userId')
+  findByUserId(@Param('userId') userId: string) {
+    return this.kidProfileService.findByUserId(userId);
+  }
+  
 
   @Get(':id')
   findOne(@Param('id') id: string) {

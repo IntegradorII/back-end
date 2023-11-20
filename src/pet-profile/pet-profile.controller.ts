@@ -5,9 +5,10 @@ import { UpdatePetProfileDto } from './dto/update-pet-profile.dto';
 import { Auth } from '@/auth/decorators/auth.decorator';
 import { Role } from '@/common/enum/role.enum';
 import { RequestWithUser } from '@/auth/auth.controller';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
 @ApiTags('pet-profile')
+@ApiBearerAuth()
 @Auth(Role.ADMIN, Role.USER)
 @Controller('pet-profile')
 export class PetProfileController {
@@ -21,6 +22,11 @@ export class PetProfileController {
   @Get()
   findAll() {
     return this.petProfileService.findAll();
+  }
+
+  @Get('user/:userId')
+  findByUserId(@Param('userId') userId: string) {
+    return this.petProfileService.findByUserId(userId);
   }
 
   @Get(':id')

@@ -4,9 +4,10 @@ import { CreatePetCharacteristicDto } from './dto/create-pet-characteristic.dto'
 import { UpdatePetCharacteristicDto } from './dto/update-pet-characteristic.dto';
 import { Auth } from '@/auth/decorators/auth.decorator';
 import { Role } from '@/common/enum/role.enum';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
 @ApiTags('pet-characteristic')
+@ApiBearerAuth()
 @Auth(Role.ADMIN, Role.USER)
 @Controller('pet-characteristic')
 export class PetCharacteristicController {

@@ -5,7 +5,7 @@ import { SigninDto } from './dto/signin.dto';
 import { SignupGuard } from './guards/signup.guard';
 import { Auth } from './decorators/auth.decorator';
 import { Role } from '@/common/enum/role.enum';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
 export interface UserData {
   email?: string;
@@ -17,6 +17,7 @@ export interface RequestWithUser extends Request {
 }
 
 @ApiTags('auth')
+@ApiBearerAuth()
 @Controller('auth')
 export class AuthController {
 

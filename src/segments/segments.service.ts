@@ -63,7 +63,7 @@ export class SegmentsService {
         throw new ConflictException('Segment name already exists');
       }
     }
-    if(requiredPoints !== segment.requiredPoints) {
+    if(requiredPoints !== undefined && requiredPoints !== segment.requiredPoints) {
       segment = await this.findOneByRequiredPoints(requiredPoints);
       if(segment) {
         throw new ConflictException('Required points already exists');

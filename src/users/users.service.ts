@@ -5,6 +5,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { Repository } from 'typeorm';
 import { SegmentsService } from '@/segments/segments.service';
+import { Role } from '@/common/enum/role.enum';
 
 @Injectable()
 export class UsersService {
@@ -17,9 +18,14 @@ export class UsersService {
 
   async create(createUserDto: CreateUserDto) {
     const points = createUserDto.points || 0;
-    const segment = await this.getSegment(points);
+    let segment = undefined;
+    if(createUserDto.role !== Role.ADMIN) {
+      segment = await this.getSegment(points);
+    }
     const newUser = this.userRepository.create(createUserDto);
-    newUser.segment = segment;
+    if(segment) {
+      newUser.segment = segment;
+    }
     return this.userRepository.save(newUser);
   }
 
@@ -52,7 +58,10 @@ export class UsersService {
   }
 
   findOneByEmail(email: string) {
-    return this.userRepository.findOneBy({ email });
+    return this.userRepository.findOne({
+      where: { email },
+      relations: ['segment'],
+    });
   }
 
   findByEmailWithPassword(email: string) {
@@ -76,8 +85,8 @@ export class UsersService {
   }
 
   update(id: string, updateUserDto: UpdateUserDto) {
-    console.log('updateUserDto', updateUserDto);
-    return `This action updates a #${id} user`;
+    // const { docType, docNumber, email, password, role } = updateUserDto;
+    return this.userRepository.update(id, updateUserDto);
   }
 
   remove(id: string) {

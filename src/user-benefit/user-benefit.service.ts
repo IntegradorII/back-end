@@ -1,4 +1,4 @@
-import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateUserBenefitDto } from './dto/create-user-benefit.dto';
 import { UpdateUserBenefitDto } from './dto/update-user-benefit.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -19,7 +19,18 @@ export class UserBenefitService {
 
   async create(createUserBenefitDto: CreateUserBenefitDto) {
 
-    const { userEmail, benefitId } = createUserBenefitDto;
+    const { userEmail, benefitId, estatus, expirationDate, ...rest } = createUserBenefitDto;
+    let { amount, remaining } = rest;
+    if(amount === undefined) {
+      amount = 1;
+    }
+    if(remaining === undefined) {
+      remaining = amount;
+    }
+
+    if(amount < remaining) {
+      throw new BadRequestException('Remaining most be less or equal to amount');
+    }
 
     const user = await this.usersService.findOneByEmail(userEmail);
     if(!user) {
@@ -47,10 +58,10 @@ export class UserBenefitService {
     const newUserBenefit = this.userBenefitRepository.create({
       user,
       benefit,
-      amount: createUserBenefitDto.amount,
-      remaining: createUserBenefitDto.remaining,
-      estatus: createUserBenefitDto.estatus,
-      expirationDate: createUserBenefitDto.expirationDate,
+      amount,
+      remaining,
+      estatus,
+      expirationDate
     });
 
     return this.userBenefitRepository.save(newUserBenefit);

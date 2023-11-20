@@ -46,6 +46,7 @@ export class User extends BaseEntity {
   @ManyToOne(() => Segment, segment => segment.id, {
     cascade: true,
     onUpdate: 'CASCADE',
+    nullable: true,
   })
   segment: Segment;
 

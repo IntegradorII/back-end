@@ -1,12 +1,12 @@
 import { Transform } from 'class-transformer';
 import { IsEmail, IsEnum, IsInt, IsNotEmpty, IsNumberString, IsOptional, IsString, Length, MinLength } from 'class-validator';
 import { Role } from '@/common/enum/role.enum';
+import { DocType } from '@/common/enum/doc-type.enum';
 
 export class SignupDto {
 
-  @IsString()
-  @Length(2)
-  docType: string;
+  @IsEnum(DocType)
+  docType: DocType;
 
   @IsNumberString()
   @Length(6, 10)

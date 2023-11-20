@@ -35,17 +35,13 @@ export class SignupGuard implements CanActivate {
 
   private async validateToken(token: string, request: Request) : Promise<boolean> {
     try {
-
       const payload = await this.jwtService.verifyAsync(token, {
         secret: jwtConstants.secret,
       });
-
       if (payload.role !== Role.ADMIN) {
         throw new Error('Invalid role');
       }
-
       request['user'] = payload;
-
     } catch (error) {
       // throw new UnauthorizedException('Invalid token');
       throw new UnauthorizedException();

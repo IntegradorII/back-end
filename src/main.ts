@@ -29,6 +29,7 @@ async function bootstrap() {
     .setTitle('Fidelizacion API')
     .setDescription('API para el manejo de la fidelizacion de clientes')
     .setVersion('1.0')
+    .addBearerAuth()
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('docs', app, document);

@@ -1,6 +1,6 @@
 import { Benefit } from '@/benefits/entities/benefit.entity';
 import { BaseEntity } from '@/common/config/base.entity';
-import { Column, Entity, OneToMany } from 'typeorm';
+import { Column, Entity, JoinColumn, OneToMany } from 'typeorm';
 
 @Entity()
 export class BenefitType extends BaseEntity {
@@ -15,7 +15,7 @@ export class BenefitType extends BaseEntity {
     cascade: true,
     onUpdate: 'CASCADE',
   })
-  // @JoinColumn({ name: 'benefit_id' })
+  @JoinColumn()
   benefits: Benefit[];
 
 }

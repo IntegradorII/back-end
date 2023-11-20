@@ -53,6 +53,16 @@ export class PetProfileService {
     return this.petProfileRepository.findOneBy({ id });
   }
 
+  findByUserId(userId: string) {
+    return this.petProfileRepository.find({ 
+      where: {
+        user: {
+          id: userId
+        }
+      }
+    });
+  }
+
   findByUserEmail(userEmail: string) {
     return this.petProfileRepository.find({ 
       where: {
