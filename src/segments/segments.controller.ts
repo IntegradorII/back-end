@@ -4,7 +4,9 @@ import { CreateSegmentDto } from './dto/create-segment.dto';
 import { UpdateSegmentDto } from './dto/update-segment.dto';
 import { Auth } from '@/auth/decorators/auth.decorator';
 import { Role } from '@/common/enum/role.enum';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('segments')
 @Auth(Role.ADMIN)
 @Controller('segments')
 export class SegmentsController {

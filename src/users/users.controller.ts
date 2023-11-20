@@ -4,7 +4,9 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { Auth } from '@/auth/decorators/auth.decorator';
 import { Role } from '@/common/enum/role.enum';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('users')
 @Auth(Role.ADMIN)
 @Controller('users')
 export class UsersController {

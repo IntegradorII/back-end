@@ -6,7 +6,9 @@ import { isUUID } from 'class-validator';
 import { Auth } from '@/auth/decorators/auth.decorator';
 import { Role } from '@/common/enum/role.enum';
 import { RequestWithUser } from '@/auth/auth.controller';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('kid-profile')
 @Auth(Role.ADMIN, Role.USER)
 @Controller('kid-profile')
 export class KidProfileController {

@@ -5,7 +5,9 @@ import { UpdateBenefitTypeDto } from './dto/update-benefit-type.dto';
 import { Auth } from '@/auth/decorators/auth.decorator';
 import { Role } from '@/common/enum/role.enum';
 import { isUUID } from 'class-validator';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('benefit-type')
 @Auth(Role.ADMIN)
 @Controller('benefit-type')
 export class BenefitTypeController {

@@ -4,7 +4,9 @@ import { CreateSegmentBenefitDto } from './dto/create-segment-benefit.dto';
 import { UpdateSegmentBenefitDto } from './dto/update-segment-benefit.dto';
 import { Auth } from '@/auth/decorators/auth.decorator';
 import { Role } from '@/common/enum/role.enum';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('segment-benefit')
 @Auth(Role.ADMIN)
 @Controller('segment-benefit')
 export class SegmentBenefitController {

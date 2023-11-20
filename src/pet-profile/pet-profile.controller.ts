@@ -5,7 +5,9 @@ import { UpdatePetProfileDto } from './dto/update-pet-profile.dto';
 import { Auth } from '@/auth/decorators/auth.decorator';
 import { Role } from '@/common/enum/role.enum';
 import { RequestWithUser } from '@/auth/auth.controller';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('pet-profile')
 @Auth(Role.ADMIN, Role.USER)
 @Controller('pet-profile')
 export class PetProfileController {

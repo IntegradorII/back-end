@@ -4,7 +4,9 @@ import { CreateAlliedBrandDto } from './dto/create-allied-brand.dto';
 import { UpdateAlliedBrandDto } from './dto/update-allied-brand.dto';
 import { Auth } from '@/auth/decorators/auth.decorator';
 import { Role } from '@/common/enum/role.enum';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('allied-brands')
 @Auth(Role.ADMIN)
 @Controller('allied-brands')
 export class AlliedBrandsController {
