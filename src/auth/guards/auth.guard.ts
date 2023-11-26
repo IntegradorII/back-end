@@ -2,7 +2,7 @@ import { CanActivate, ExecutionContext, Injectable, UnauthorizedException } from
 import { Observable } from 'rxjs';
 import { Request } from 'express';
 import { JwtService } from '@nestjs/jwt';
-import { jwtConstants } from '../constants/jwt.constants';
+import { extractTokenFromHeader, validateToken } from '@/common/util/jwt';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -17,34 +17,13 @@ export class AuthGuard implements CanActivate {
     
     const request = context.switchToHttp().getRequest<Request>();
     
-    const token = this.extractTokenFromHeader(request);
+    const token = extractTokenFromHeader(request);
 
     if (!token) {
       // throw new UnauthorizedException('Token not found');
       throw new UnauthorizedException();
     }
 
-    return this.validateToken(token, request);
-  }
-
-  private async validateToken(token: string, request: Request) : Promise<boolean> {
-    try {
-
-      const payload = await this.jwtService.verifyAsync(token, {
-        secret: jwtConstants.secret,
-      });
-
-      request['user'] = payload;
-
-    } catch (error) {
-      // throw new UnauthorizedException('Invalid token');
-      throw new UnauthorizedException();
-    }
-    return true;
-  }
-
-  private extractTokenFromHeader(request: Request): string | undefined {
-    const [type, token] = request.headers.authorization?.split(' ') ?? [];
-    return type === 'Bearer' ? token : undefined;
+    return validateToken({token, request, jwtService: this.jwtService});
   }
 }
