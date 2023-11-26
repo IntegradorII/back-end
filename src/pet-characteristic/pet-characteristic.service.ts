@@ -127,8 +127,8 @@ export class PetCharacteristicService {
     });
   }
 
-  remove(id: string) {
-    const petCharacteristic = this.findOne(id);
+  async remove(id: string) {
+    const petCharacteristic = await this.findOne(id);
     if(!petCharacteristic) {
       throw new NotFoundException('Pet Characteristic not found');
     }

@@ -97,8 +97,8 @@ export class KidProfileService {
     return this.kidProfileRepository.update(id, updateKidProfileDto);
   }
 
-  remove(id: string) {
-    const profile = this.findOne(id);
+  async remove(id: string) {
+    const profile = await this.findOne(id);
     if(!profile) {
       throw new NotFoundException('Profile not found');
     }

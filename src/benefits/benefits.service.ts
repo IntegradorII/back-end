@@ -45,7 +45,7 @@ export class BenefitsService {
   }
 
   async update(id: string, updateBenefitDto: UpdateBenefitDto) {
-    const benefit = this.findOne(id);
+    const benefit = await this.findOne(id);
     if(!benefit) {
       throw new NotFoundException('Benefit not found');
     }

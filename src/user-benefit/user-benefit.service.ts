@@ -127,8 +127,8 @@ export class UserBenefitService {
     });
   }
 
-  remove(id: string) {
-    const userBenefit = this.findOne(id);
+  async remove(id: string) {
+    const userBenefit = await this.findOne(id);
     if(!userBenefit) {
       throw new NotFoundException('User Benefit not found');
     }

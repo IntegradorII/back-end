@@ -90,8 +90,8 @@ export class PetProfileService {
     return this.petProfileRepository.update(id, updatePetProfileDto);
   }
 
-  remove(id: string) {
-    const profile = this.findOne(id);
+  async remove(id: string) {
+    const profile = await this.findOne(id);
     if(!profile) {
       throw new NotFoundException('Profile not found');
     }

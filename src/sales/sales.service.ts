@@ -104,8 +104,8 @@ export class SalesService {
     return this.salesRepository.update(id, updateSaleDto);
   }
 
-  remove(id: string) {
-    const sale = this.findOne(id);
+  async remove(id: string) {
+    const sale = await this.findOne(id);
     if(!sale) {
       throw new NotFoundException('Sale not found');
     }
