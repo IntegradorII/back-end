@@ -96,8 +96,8 @@ export class SalesService {
     return this.salesRepository.findOneBy({ id });
   }
 
-  update(id: string, updateSaleDto: UpdateSaleDto) {
-    const sale = this.findOne(id);
+  async update(id: string, updateSaleDto: UpdateSaleDto) {
+    const sale = await this.findOne(id);
     if(!sale) {
       throw new NotFoundException('Sale not found');
     }
