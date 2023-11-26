@@ -6,20 +6,14 @@ import { Column, Entity, ManyToOne } from 'typeorm';
 @Entity('user_benefit')
 export class UserBenefit extends BaseEntity {
 
-  @ManyToOne(() => User, use => use.id, {
-    eager: true,
-    cascade: true,
+  @ManyToOne(() => User, user => user.benefits, {
     nullable: false,
-    onUpdate: 'CASCADE',
   })
   // @JoinColumn({ name: 'user_email', referencedColumnName: 'email' })
   user: User;
 
-  @ManyToOne(() => Benefit, benefit => benefit.id, {
-    eager: true,
-    cascade: true,
-    nullable: false,
-    onUpdate: 'CASCADE',
+  @ManyToOne(() => Benefit, benefit => benefit.users, {
+    // eager: true,
   })
   benefit: Benefit;
 

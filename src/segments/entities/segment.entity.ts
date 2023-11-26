@@ -15,17 +15,13 @@ export class Segment extends BaseEntity {
   @Column({ type: 'text' })
   description: string;
 
-  @OneToMany(() => SegmentBenefit, segmentBenefit => segmentBenefit.id, {
+  @OneToMany(() => SegmentBenefit, segmentBenefit => segmentBenefit.segment, {
     // eager: true,
-    cascade: true,
-    onUpdate: 'CASCADE',
-    })
+  })
   benefits: SegmentBenefit[];
 
-  @OneToMany(() => User, user => user.id, {
+  @OneToMany(() => User, user => user.segment, {
     // eager: true,
-    cascade: true,
-    onUpdate: 'CASCADE',
   })
   users: User[];
 

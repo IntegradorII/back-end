@@ -15,18 +15,33 @@ import { UserBenefitModule } from './user-benefit/user-benefit.module';
 import { KidProfileModule } from './kid-profile/kid-profile.module';
 import { PetProfileModule } from './pet-profile/pet-profile.module';
 import { PetCharacteristicModule } from './pet-characteristic/pet-characteristic.module';
+import * as Joi from 'joi';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+      validationSchema: Joi.object({
+        PORT: Joi.number().required(),
+        POSTGRES_HOST: Joi.string().required(),
+        POSTGRES_PORT: Joi.number().required(),
+        POSTGRES_USER: Joi.string().required(),
+        POSTGRES_PASSWORD: Joi.string().required(),
+        POSTGRES_DB: Joi.string().required(),
+        APP_JWT_SECRET: Joi.string().required(),
+      })
+    }),
     TypeOrmModule.forRoot({
       type: 'postgres',
-      host: 'localhost',
-      port: 5432,
-      username: 'postgres',
-      password: 'jsonpostgres',
-      database: 'localintegrador',
+      host: process.env.POSTGRES_HOST,
+      port: parseInt(process.env.POSTGRES_PORT),
+      username: process.env.POSTGRES_USER,
+      password: process.env.POSTGRES_PASSWORD,
+      database: process.env.POSTGRES_DB,
       entities: ['dist/**/*.entity{.ts,.js}'],
-      synchronize: true,
+      synchronize: false,
+      logging: true,
       retryDelay: 3000,
       retryAttempts: 10,
     }),

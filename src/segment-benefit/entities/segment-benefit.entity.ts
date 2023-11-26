@@ -6,23 +6,19 @@ import { Column, Entity, ManyToOne } from 'typeorm';
 @Entity()
 export class SegmentBenefit extends BaseEntity {
 
-  @ManyToOne(() => Segment, segment => segment.id, {
-    cascade: true,
+  @ManyToOne(() => Segment, segment => segment.benefits, {
     nullable: false,
-    onUpdate: 'CASCADE',
   })
   // @JoinColumn({ name: 'segment_id' })
   segment: Segment;
 
-  @ManyToOne(() => Benefit, benefit => benefit.id, {
-    cascade: true,
+  @ManyToOne(() => Benefit, benefit => benefit.segments, {
     nullable: false,
-    onUpdate: 'CASCADE',
   })
   // @JoinColumn({ name: 'benefit_id' })
   benefit: Benefit;
 
-  @Column({ type: 'int', nullable: false })
+  @Column({ type: 'int', nullable: false, default: 1 })
   amount: number;
 
 }

@@ -4,13 +4,15 @@ import { IsEmail, IsEnum, IsInt, IsNotEmpty, IsNumberString, IsOptional, IsStrin
 
 export class CreateUserDto {
 
+  @IsOptional()
   @IsString()
   @Length(2)
-  docType: string;
+  docType?: string;
 
+  @IsOptional()
   @IsNumberString()
   @Length(6, 10)
-  docNumber: string;
+  docNumber?: string;
 
   @IsOptional()
   @IsEnum(Role)
@@ -19,10 +21,11 @@ export class CreateUserDto {
   @IsEmail()
   email: string;
 
+  @IsOptional()
   @IsString()
   @Transform(({ value }) => value.trim())
   @MinLength(6)
-  password: string;
+  password?: string;
 
   @IsOptional()
   @IsString()
@@ -47,5 +50,7 @@ export class CreateUserDto {
   @Transform(({ value }) => value.trim())
   @IsNotEmpty()
   image?: string;
+
+  
   
 }

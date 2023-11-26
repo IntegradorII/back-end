@@ -1,16 +1,15 @@
 import { BaseEntity } from '@/common/config/base.entity';
 import { User } from '@/users/entities/user.entity';
-import { Column, Entity, ManyToOne } from 'typeorm';
+import { Column, Entity, ManyToOne, OneToMany } from 'typeorm';
 import { PetKind } from '@/common/enum/pet-kind.enum';
 import { PetGender } from '@/common/enum/pet-gender.enum';
 import { Relationship } from '@/common/enum/relationship.enum';
+import { PetCharacteristic } from '@/pet-characteristic/entities/pet-characteristic.entity';
 
 @Entity()
 export class PetProfile extends BaseEntity {
 
-  @ManyToOne(() => User, user => user.id, {
-    cascade: true,
-    onDelete: 'CASCADE',
+  @ManyToOne(() => User, user => user.petProfiles, {
     nullable: false,
   })
   user: User;
@@ -35,5 +34,8 @@ export class PetProfile extends BaseEntity {
 
   @Column({ nullable: true, type: 'enum', enum: Relationship })
   relationship: Relationship;
+
+  @OneToMany(() => PetCharacteristic, petCharacteristic => petCharacteristic.petProfile)
+  petCharacteristics: PetCharacteristic[];
 
 }

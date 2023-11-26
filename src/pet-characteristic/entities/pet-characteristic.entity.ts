@@ -5,17 +5,15 @@ import { Entity, ManyToOne } from 'typeorm';
 
 @Entity()
 export class PetCharacteristic extends BaseEntity {
-  @ManyToOne(() => PetProfile, petProfile => petProfile.id, {
-    cascade: true,
-    onDelete: 'CASCADE',
+
+  @ManyToOne(() => PetProfile, petProfile => petProfile.petCharacteristics, {
     nullable: false,
   })
   petProfile: PetProfile;
 
-  @ManyToOne(() => Characteristic, characteristic => characteristic.id, {
-    cascade: true,
-    onDelete: 'CASCADE',
+  @ManyToOne(() => Characteristic, characteristic => characteristic.petCharacteristics, {
     nullable: false,
   })
   characteristic: Characteristic;
+
 }

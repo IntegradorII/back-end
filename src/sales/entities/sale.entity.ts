@@ -5,10 +5,8 @@ import { Column, Entity, ManyToOne } from 'typeorm';
 @Entity()
 export class Sale extends BaseEntity {
 
-  @ManyToOne(() => User, user => user.id, {
+  @ManyToOne(() => User, user => user.sales, {
     nullable: false,
-    cascade: true,
-    onUpdate: 'CASCADE',
   })
   user: User;
 

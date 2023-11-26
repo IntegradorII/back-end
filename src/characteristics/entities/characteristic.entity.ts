@@ -1,5 +1,6 @@
 import { BaseEntity } from '@/common/config/base.entity';
-import { Column, Entity } from 'typeorm';
+import { PetCharacteristic } from '@/pet-characteristic/entities/pet-characteristic.entity';
+import { Column, Entity, ManyToMany } from 'typeorm';
 
 @Entity()
 export class Characteristic extends BaseEntity {
@@ -10,4 +11,7 @@ export class Characteristic extends BaseEntity {
   @Column({ type: 'text' })
   description: string;
 
+  @ManyToMany(() => PetCharacteristic, petCharacteristic => petCharacteristic.characteristic)
+  petCharacteristics: PetCharacteristic[];
+  
 }

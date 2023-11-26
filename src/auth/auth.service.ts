@@ -55,4 +55,14 @@ export class AuthService {
     return await this.usersService.findOneByEmail(user.email);
   }
 
+  async auth0(userData: UserData) {
+    let user = await this.usersService.findOneByEmail(userData.email);
+    if (!user) {
+      user = await this.usersService.create({
+        email: userData.email,
+      });
+    }
+    return user;
+  }
+
 }

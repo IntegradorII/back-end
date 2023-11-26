@@ -16,9 +16,7 @@ export class KidProfile extends BaseEntity {
   @Column({ nullable: false })
   docNumber: string;
 
-  @ManyToOne(() => User, user => user.id, {
-    cascade: true,
-    onUpdate: 'CASCADE',
+  @ManyToOne(() => User, user => user.kidProfiles, {
     nullable: false
   })
   user: User;

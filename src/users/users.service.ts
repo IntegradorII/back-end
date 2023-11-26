@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -84,9 +84,39 @@ export class UsersService {
     return this.userRepository.findOneBy({ docType, docNumber });
   }
 
-  update(id: string, updateUserDto: UpdateUserDto) {
-    // const { docType, docNumber, email, password, role } = updateUserDto;
+  async update(id: string, updateUserDto: UpdateUserDto) {
+    const user = await this.userRepository.findOneBy({ id });
+    if(!user) {
+      throw new NotFoundException('User not found');
+    }
+    let { docType, docNumber } = updateUserDto;
+    if(!docType) docType = user.docType;
+    if(!docNumber) docNumber = user.docNumber;
+    if(docType !== user.docType || docNumber !== user.docNumber) {
+      const userFound = await this.findOneByDocTypeAndDocNumber(docType, docNumber);
+      if(userFound) {
+        throw new ConflictException('User already exists');
+      }
+    }
+    
     return this.userRepository.update(id, updateUserDto);
+  }
+
+  async updateByEmail(email: string, updateUserDto: UpdateUserDto) {
+    const user = await this.findOneByEmail(email);
+    if(!user) {
+      throw new NotFoundException('User not found');
+    }
+    let { docType, docNumber } = updateUserDto;
+    if(!docType) docType = user.docType;
+    if(!docNumber) docNumber = user.docNumber;
+    if(docType !== user.docType || docNumber !== user.docNumber) {
+      const userFound = await this.findOneByDocTypeAndDocNumber(docType, docNumber);
+      if(userFound) {
+        throw new ConflictException('User already exists');
+      }
+    }
+    return this.userRepository.update(user.id, updateUserDto);
   }
 
   remove(id: string) {

@@ -6,6 +6,7 @@ import { SignupGuard } from './guards/signup.guard';
 import { Auth } from './decorators/auth.decorator';
 import { Role } from '@/common/enum/role.enum';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { Auth0Guard } from './guards/aut0.guard';
 
 export interface UserData {
   email?: string;
@@ -46,5 +47,11 @@ export class AuthController {
   @Auth(Role.ADMIN)
   profile(@Req() req: RequestWithUser) {
     return this.authService.profile(req.user);
+  }
+
+  @UseGuards(Auth0Guard)
+  @Post('auth0')
+  auth0(@Req() req: RequestWithUser) {
+    return this.authService.auth0(req.user);
   }
 }
