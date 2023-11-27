@@ -6,7 +6,7 @@ import { SignupGuard } from './guards/signup.guard';
 import { Auth } from './decorators/auth.decorator';
 import { Role } from '@/common/enum/role.enum';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
-import { Auth0Guard } from './guards/aut0.guard';
+import { JwtAuthGuard } from './guards/jwt-auth.guard';
 
 export interface UserData {
   email?: string;
@@ -49,7 +49,7 @@ export class AuthController {
     return this.authService.profile(req.user);
   }
 
-  @UseGuards(Auth0Guard)
+  @UseGuards(JwtAuthGuard)
   @Post('auth0')
   auth0(@Req() req: RequestWithUser) {
     return this.authService.auth0(req.user);

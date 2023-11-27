@@ -17,6 +17,9 @@ import { PetProfileModule } from './pet-profile/pet-profile.module';
 import { PetCharacteristicModule } from './pet-characteristic/pet-characteristic.module';
 import * as Joi from 'joi';
 import { ConfigModule } from '@nestjs/config';
+import { PassportModule } from '@nestjs/passport';
+import { JwtModule } from '@nestjs/jwt';
+import { JwtStrategy } from './auth/strategies/jwt.strategy';
 
 @Module({
   imports: [
@@ -30,6 +33,10 @@ import { ConfigModule } from '@nestjs/config';
         POSTGRES_PASSWORD: Joi.string().required(),
         POSTGRES_DB: Joi.string().required(),
         APP_JWT_SECRET: Joi.string().required(),
+        AUTH0_DOMAIN: Joi.string().required(),
+        AUTH0_CLIENT_ID: Joi.string().required(),
+        AUTH0_CLIENT_SECRET: Joi.string().required(),
+        AUTH0_CALLBACK_URL: Joi.string().required(),
       })
     }),
     TypeOrmModule.forRoot({
@@ -44,6 +51,10 @@ import { ConfigModule } from '@nestjs/config';
       logging: true,
       retryDelay: 3000,
       retryAttempts: 10,
+    }),
+    PassportModule,
+    JwtModule.register({
+      global: true,
     }),
     AuthModule,
     UsersModule,
@@ -60,6 +71,6 @@ import { ConfigModule } from '@nestjs/config';
     PetCharacteristicModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, JwtStrategy],
 })
 export class AppModule {}
