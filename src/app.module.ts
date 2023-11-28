@@ -33,10 +33,10 @@ import { JwtStrategy } from './auth/strategies/jwt.strategy';
         POSTGRES_PASSWORD: Joi.string().required(),
         POSTGRES_DB: Joi.string().required(),
         APP_JWT_SECRET: Joi.string().required(),
-        AUTH0_DOMAIN: Joi.string().required(),
-        AUTH0_CLIENT_ID: Joi.string().required(),
-        AUTH0_CLIENT_SECRET: Joi.string().required(),
-        AUTH0_CALLBACK_URL: Joi.string().required(),
+        // AUTH0_DOMAIN: Joi.string().required(),
+        // AUTH0_CLIENT_ID: Joi.string().required(),
+        // AUTH0_CLIENT_SECRET: Joi.string().required(),
+        // AUTH0_CALLBACK_URL: Joi.string().required(),
       })
     }),
     TypeOrmModule.forRoot({

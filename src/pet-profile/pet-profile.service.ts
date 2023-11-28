@@ -5,7 +5,7 @@ import { UsersService } from '@/users/users.service';
 import { PetProfile } from './entities/pet-profile.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import { UserData } from '@/auth/auth.controller';
+import { UserJwt } from '@/auth/dto/user-jwt.dto';
 import { Role } from '@/common/enum/role.enum';
 
 @Injectable()
@@ -17,7 +17,7 @@ export class PetProfileService {
     private readonly usersService: UsersService,
   ) {}
 
-  async create(createPetProfileDto: CreatePetProfileDto, user: UserData) {
+  async create(createPetProfileDto: CreatePetProfileDto, user: UserJwt) {
     const { userEmail } = createPetProfileDto;
     if(user.role === Role.USER) {
       if(userEmail !== user.email) {
@@ -73,7 +73,7 @@ export class PetProfileService {
     });
   }
 
-  async update(id: string, updatePetProfileDto: UpdatePetProfileDto, user: UserData) {
+  async update(id: string, updatePetProfileDto: UpdatePetProfileDto, user: UserJwt) {
     const { userEmail } = updatePetProfileDto;
     const profile = await this.findOne(id);
     if(!profile) {

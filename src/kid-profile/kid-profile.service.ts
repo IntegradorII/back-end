@@ -4,7 +4,7 @@ import { UpdateKidProfileDto } from './dto/update-kid-profile.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { KidProfile } from './entities/kid-profile.entity';
 import { Repository } from 'typeorm';
-import { UserData } from '@/auth/auth.controller';
+import { UserJwt } from '@/auth/dto/user-jwt.dto';
 import { Role } from '@/common/enum/role.enum';
 import { UsersService } from '@/users/users.service';
 
@@ -17,7 +17,7 @@ export class KidProfileService {
     private readonly usersService: UsersService
   ) {}
 
-  async create(createKidProfileDto: CreateKidProfileDto, user: UserData) {
+  async create(createKidProfileDto: CreateKidProfileDto, user: UserJwt) {
     const { docType, docNumber, userEmail } = createKidProfileDto;
     if(user.role === Role.USER) {
       if(userEmail !== user.email) {
@@ -80,7 +80,7 @@ export class KidProfileService {
     return this.kidProfileRepository.find({ where: {docType, docNumber} });
   }
 
-  async update(id: string, updateKidProfileDto: UpdateKidProfileDto, user: UserData) {
+  async update(id: string, updateKidProfileDto: UpdateKidProfileDto, user: UserJwt) {
     const { userEmail } = updateKidProfileDto;
     const profile = await this.findOne(id);
     if(!profile) {

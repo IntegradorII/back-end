@@ -119,7 +119,11 @@ export class UsersService {
     return this.userRepository.update(user.id, updateUserDto);
   }
 
-  remove(id: string) {
-    return `This action removes a #${id} user`;
+  async remove(id: string) {
+    const user = await this.findOne(id);
+    if(!user) {
+      throw new NotFoundException('User not found');
+    }
+    return this.userRepository.delete(id);
   }
 }

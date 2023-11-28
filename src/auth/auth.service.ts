@@ -4,7 +4,9 @@ import { UsersService } from 'src/users/users.service';
 import * as bcrypt from 'bcrypt';
 import { SigninDto } from './dto/signin.dto';
 import { JwtService } from '@nestjs/jwt';
-import { UserData } from './auth.controller';
+import { UserJwt } from './dto/user-jwt.dto';
+import { expiresInToMilliseconds, jwtExpiresIn } from '@/auth/constants/jwt-constants';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class AuthService {
@@ -12,19 +14,20 @@ export class AuthService {
   constructor(
     private readonly usersService: UsersService,
     private readonly jwtService: JwtService,
+    private readonly configService: ConfigService,
   ) { }
 
   async signup(signupDto: SignupDto) {
     const { docType, docNumber, email, password } = signupDto;
-    let user = await this.usersService.findOneByDocTypeAndDocNumber(docType, docNumber);
-    if (user) {
-      throw new ConflictException('User already exists');
-    }
-    user = await this.usersService.findOneByEmail(email);
+    let user = await this.usersService.findOneByEmail(email);
     if (user) {
       throw new ConflictException('Email already exists');
     }
-
+    user = await this.usersService.findOneByDocTypeAndDocNumber(docType, docNumber);
+    if (user) {
+      throw new ConflictException('User already exists');
+    }
+    
     signupDto.password = await bcrypt.hash(password, 10);
 
     return await this.usersService.create(signupDto);
@@ -41,28 +44,21 @@ export class AuthService {
       throw new BadRequestException('Invalid credentials');
     }
 
-    const payload = { email: user.email, role: user.role };
-    const accessToken = this.jwtService.sign(payload);
+    const payload: UserJwt = { 
+      email: user.email,
+      role: user.role,
+      expires_at: new Date().getTime() + expiresInToMilliseconds(),
+    };
+    const accessToken = this.jwtService.sign(payload, {
+      secret: this.configService.get('APP_JWT_SECRET'),
+      expiresIn: jwtExpiresIn,
+    });
 
     return {
       access_token: accessToken,
       email: user.email,
       role: user.role,
     };
-  }
-
-  async profile(user: UserData) {
-    return await this.usersService.findOneByEmail(user.email);
-  }
-
-  async auth0(userData: UserData) {
-    let user = await this.usersService.findOneByEmail(userData.email);
-    if (!user) {
-      user = await this.usersService.create({
-        email: userData.email,
-      });
-    }
-    return user;
   }
 
 }

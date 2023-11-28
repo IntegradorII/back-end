@@ -1,20 +1,14 @@
-import { Body, Controller, Post, Get, UseGuards, Req } from '@nestjs/common';
+import { Body, Controller, Get, Post, Req } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { SignupDto } from './dto/signup.dto';
 import { SigninDto } from './dto/signin.dto';
-import { SignupGuard } from './guards/signup.guard';
 import { Auth } from './decorators/auth.decorator';
 import { Role } from '@/common/enum/role.enum';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
-import { JwtAuthGuard } from './guards/jwt-auth.guard';
-
-export interface UserData {
-  email?: string;
-  role?: string;
-}
+import { UserJwt } from './dto/user-jwt.dto';
 
 export interface RequestWithUser extends Request {
-  user: UserData;
+  user: UserJwt;
 }
 
 @ApiTags('auth')
@@ -27,14 +21,18 @@ export class AuthController {
   ) { }
 
   @Post('signup')
-  @UseGuards(SignupGuard)
+  // @Public()
+  @Auth(Role.ADMIN)
   async signup(@Req() req: RequestWithUser, @Body() signupDto: SignupDto) {
     const res = await this.authService.signup(signupDto);
     res.password = undefined;
     return {
       message: 'User created',
-      user: req.user,
-      data: res,
+      creator: {
+        email: req.user.email,
+        role: req.user.role,
+      },
+      user: res,
     };
   }
 
@@ -42,16 +40,21 @@ export class AuthController {
   signin(@Body() signinDto: SigninDto) {
     return this.authService.signin(signinDto);
   }
-  
-  @Get('profile')
+
+  @Get('test/admin')
   @Auth(Role.ADMIN)
-  profile(@Req() req: RequestWithUser) {
-    return this.authService.profile(req.user);
+  testAdmin(@Req() req: RequestWithUser) {
+    return {
+      ...req.user,
+    };
   }
 
-  @UseGuards(JwtAuthGuard)
-  @Post('auth0')
-  auth0(@Req() req: RequestWithUser) {
-    return this.authService.auth0(req.user);
+  @Get('test/user')
+  @Auth(Role.USER)
+  testUser(@Req() req: RequestWithUser) {
+    return {
+      ...req.user,
+    };
   }
+  
 }
