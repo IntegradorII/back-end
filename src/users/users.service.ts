@@ -6,6 +6,7 @@ import { User } from './entities/user.entity';
 import { Repository } from 'typeorm';
 import { SegmentsService } from '@/segments/segments.service';
 import { Role } from '@/common/enum/role.enum';
+// import { Segment } from '@/segments/entities/segment.entity';
 
 @Injectable()
 export class UsersService {
@@ -51,11 +52,11 @@ export class UsersService {
     return segment;
   }
 
-  async assignSegment(user: User) {
-    const segment = await this.getSegment(user.points);
-    user.segment = segment;
-    return this.userRepository.save(user);
-  }
+  // async assignSegment(user: User) {
+  //   const segment: Segment = await this.getSegment(user.points);
+  //   user.segment = segment;
+  //   return this.userRepository.save(user);
+  // }
 
   findOneByEmail(email: string) {
     return this.userRepository.findOne({
@@ -73,7 +74,9 @@ export class UsersService {
   }
 
   findAll() {
-    return this.userRepository.find();
+    return this.userRepository.find({
+      relations: ['segment'],
+    });
   }
 
   findOne(id: string) {
@@ -82,6 +85,13 @@ export class UsersService {
 
   findOneByDocTypeAndDocNumber(docType: string, docNumber: string) {
     return this.userRepository.findOneBy({ docType, docNumber });
+  }
+
+  // async updateAndAssignSegment(id: string, updateUserDto: UpdateUserDto) {
+  // }
+
+  saveUser(user: User) {
+    return this.userRepository.save(user);
   }
 
   async update(id: string, updateUserDto: UpdateUserDto) {

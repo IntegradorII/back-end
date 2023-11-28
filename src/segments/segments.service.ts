@@ -36,11 +36,17 @@ export class SegmentsService {
       order: {
         requiredPoints: 'ASC',
       },
+      relations: ['benefits'],
     });
   }
 
   findOne(id: string) {
-    return this.segmentRepository.findOneBy({ id });
+    return this.segmentRepository.findOne({
+      where: {
+        id,
+      },
+      relations: ['benefits'],
+    });
   }
 
   findOneByName(name: string) {

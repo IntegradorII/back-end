@@ -50,7 +50,5 @@ export class CreateUserDto {
   @Transform(({ value }) => value.trim())
   @IsNotEmpty()
   image?: string;
-
-  
   
 }

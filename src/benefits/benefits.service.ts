@@ -37,11 +37,16 @@ export class BenefitsService {
 
 
   findAll() {
-    return this.benefitRepository.find();
+    return this.benefitRepository.find({
+      relations: ['benefitType'],
+    });
   }
 
   findOne(id: string) {
-    return this.benefitRepository.findOneBy({ id });
+    return this.benefitRepository.findOne({
+      where: { id },
+      relations: ['benefitType'],
+    });
   }
 
   async update(id: string, updateBenefitDto: UpdateBenefitDto) {

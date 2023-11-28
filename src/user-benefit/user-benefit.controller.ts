@@ -28,6 +28,11 @@ export class UserBenefitController {
     return this.userBenefitService.findOne(id);
   }
 
+  @Post('assign-segment/:email')
+  async assignSegment(@Param('email') email: string) {
+    return this.userBenefitService.assignSegment(email);
+  }
+
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateUserBenefitDto: UpdateUserBenefitDto) {
     return this.userBenefitService.update(id, updateUserBenefitDto);

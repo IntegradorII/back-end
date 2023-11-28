@@ -5,6 +5,7 @@ import { UpdateSaleDto } from './dto/update-sale.dto';
 import { Auth } from '@/auth/decorators/auth.decorator';
 import { Role } from '@/common/enum/role.enum';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+// import { RequestWithUser } from '@/auth/auth.controller';
 
 @ApiTags('sales')
 @ApiBearerAuth()

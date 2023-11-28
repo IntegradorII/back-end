@@ -95,6 +95,23 @@ export class UserBenefitService {
     });
   }
 
+  async assignSegment(email: string) {
+    const user = await this.usersService.findOneByEmail(email);
+    if(!user) {
+      throw new NotFoundException('User not found');
+    }
+    const segment = await this.usersService.getSegment(user.points);
+    user.segment = segment;
+    console.log('Segment: ', segment);
+    const benefit = segment.benefits.find(benefit => benefit.id === '3efd2eea-2cc9-4eb9-84e9-6a3db74e771d');
+    if(benefit) {
+      console.log('Benefit found');
+    } else {
+      console.log('Benefit not found');
+    }
+    return 'this.usersService.saveUser(user)';
+  }
+
   async update(id: string, updateUserBenefitDto: UpdateUserBenefitDto) {
     const userBenefit = await this.findOne(id);
     if(!userBenefit) {

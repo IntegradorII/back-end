@@ -48,7 +48,9 @@ export class SegmentBenefitService {
   }
 
   findAll() {
-    return this.segmentBenefitRepository.find();
+    return this.segmentBenefitRepository.find({
+      relations: ['segment', 'benefit'],
+    });
   }
 
   findAllBySegmentId(segmentId: string) {

@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateBenefitTypeDto } from './dto/create-benefit-type.dto';
 import { UpdateBenefitTypeDto } from './dto/update-benefit-type.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -13,13 +13,19 @@ export class BenefitTypeService {
     private readonly benefitTypeRepository: Repository<BenefitType>
   ) { }
 
-  create(createBenefitTypeDto: CreateBenefitTypeDto) {
+  async create(createBenefitTypeDto: CreateBenefitTypeDto) {
+    const benefitType = await this.findOneByType(createBenefitTypeDto.type);
+    if(benefitType) {
+      throw new ConflictException('Benefit type already exists');
+    }
     const newBenefitType = this.benefitTypeRepository.create(createBenefitTypeDto);
     return this.benefitTypeRepository.save(newBenefitType);
   }
 
   findAll() {
-    return this.benefitTypeRepository.find();
+    return this.benefitTypeRepository.find({
+      relations: ['benefits'],
+    });
   }
 
   findOne(id: string) {
@@ -31,12 +37,11 @@ export class BenefitTypeService {
   }
 
   async update(id: string, updateBenefitTypeDto: UpdateBenefitTypeDto) {
-    
     let benefitType = await this.findOne(id);
     if(!benefitType) {
       throw new NotFoundException('Benefit type not found');
     }
-    if(updateBenefitTypeDto.type !== benefitType.type) {
+    if(updateBenefitTypeDto.type !== undefined && updateBenefitTypeDto.type !== benefitType.type) {
       benefitType = await this.findOneByType(updateBenefitTypeDto.type);
       if(benefitType) {
         throw new NotFoundException('Benefit type already exists');

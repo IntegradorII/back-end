@@ -14,5 +14,6 @@ import { UserBenefit } from './entities/user-benefit.entity';
   ],
   controllers: [UserBenefitController],
   providers: [UserBenefitService],
+  exports: [UserBenefitService],
 })
 export class UserBenefitModule {}

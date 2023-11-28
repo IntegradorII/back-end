@@ -28,8 +28,8 @@ export class SalesService {
       }
     });
     const sale = await this.salesRepository.save(newSale);
-    const points = this.caculatePoints(sale.value);
     try {
+      const points = this.caculatePoints(sale.value);
       await this.usersService.update(user.id, { points: user.points + points });
       await this.salesRepository.update(sale.id, { updatedPoints: true });
     } catch (error) {
