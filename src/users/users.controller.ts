@@ -34,6 +34,11 @@ export class UsersController {
     return this.usersService.findOne(id);
   }
 
+  // @Get('with-password/:id')
+  // findOneByIdWithPassword(@Param('id') id: string) {
+  //   return this.usersService.findByIdWithPassword(id);
+  // }
+
   @Get(':docType/:docNumber')
   findOneByDocTypeAndDocNumber(@Param('docType') docType: string, @Param('docNumber') docNumber: string) {
     return this.usersService.findOneByDocTypeAndDocNumber(docType, docNumber);

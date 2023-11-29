@@ -72,6 +72,14 @@ export class UsersService {
       }
     );
   }
+  findByIdWithPassword(id: string) {
+    return this.userRepository.findOne({
+        where: { id },
+        // seleccionar todos los campos
+        select: ['docType', 'docNumber', 'email', 'password', 'role']
+      }
+    );
+  }
 
   findAll() {
     return this.userRepository.find({

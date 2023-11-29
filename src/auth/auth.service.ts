@@ -36,7 +36,7 @@ export class AuthService {
   async signin(signinDto: SigninDto) {
     const { email, password } = signinDto;
     const user = await this.usersService.findByEmailWithPassword(email);
-    if (!user) {
+    if (!user || !user.password) {
       throw new BadRequestException('Invalid credentials');
     }
     const isMatch = await bcrypt.compare(password, user.password);
