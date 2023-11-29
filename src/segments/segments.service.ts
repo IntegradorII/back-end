@@ -36,7 +36,7 @@ export class SegmentsService {
       order: {
         requiredPoints: 'ASC',
       },
-      relations: ['benefits'],
+      relations: ['benefits', 'benefits.benefit'],
     });
   }
 

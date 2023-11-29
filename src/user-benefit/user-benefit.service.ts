@@ -6,6 +6,7 @@ import { UserBenefit } from './entities/user-benefit.entity';
 import { UsersService } from '@/users/users.service';
 import { BenefitsService } from '@/benefits/benefits.service';
 import { Repository } from 'typeorm';
+import { SegmentBenefit } from '@/segment-benefit/entities/segment-benefit.entity';
 
 @Injectable()
 export class UserBenefitService {
@@ -100,16 +101,51 @@ export class UserBenefitService {
     if(!user) {
       throw new NotFoundException('User not found');
     }
+    // const initialSegment = user.segment;
     const segment = await this.usersService.getSegment(user.points);
     user.segment = segment;
-    console.log('Segment: ', segment);
-    const benefit = segment.benefits.find(benefit => benefit.id === '3efd2eea-2cc9-4eb9-84e9-6a3db74e771d');
+    // if(!initialSegment || initialSegment.id !== segment.id) {
+    //   //
+    // }
+    const benefit = segment.benefits.find((segBen: SegmentBenefit) => {
+      const bene = segBen.benefit;
+      return bene.id === '3efd2eea-2cc9-4eb9-84e9-6a3db74e771d';
+    });
+    console.log('benefit', benefit);
     if(benefit) {
-      console.log('Benefit found');
-    } else {
-      console.log('Benefit not found');
+      user.segment = segment;
+      const bene = await this.benefitsService.findOneByQueryOptions({
+        where: {
+          benefitType: {
+            type: 10004,
+          },
+          expirationDate: new Date('2023-12-31T23:59:00.000Z'),
+        },
+      });
+      console.log('bene', bene);
+      if(bene) {
+        const userBenefit = await this.userBenefitRepository.findOneBy({
+          user: {
+            email: email,
+          },
+          benefit: {
+            id: bene.id,
+          },
+        });
+        if(!userBenefit) {
+          const newUserBenefit = this.userBenefitRepository.create({
+            user,
+            benefit: bene,
+            amount: 3,
+            remaining: 3,
+            estatus: 1,
+            expirationDate: bene.expirationDate,
+          });
+          await this.userBenefitRepository.save(newUserBenefit);
+        }
+      }
     }
-    return 'this.usersService.saveUser(user)';
+    return this.usersService.saveUser(user);
   }
 
   async update(id: string, updateUserBenefitDto: UpdateUserBenefitDto) {

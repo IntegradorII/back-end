@@ -1,7 +1,7 @@
 import { BaseEntity } from '@/common/config/base.entity';
 import { BottomSize } from '@/common/enum/botton-size.enum';
 import { Gender } from '@/common/enum/gender.enum';
-import { DocType } from '@/common/enum/doc-type.enum';
+import { KidDocType } from '@/common/enum/kid-doc-type.enum';
 import { Relationship } from '@/common/enum/relationship.enum';
 import { TopSize } from '@/common/enum/top-size.enum';
 import { User } from '@/users/entities/user.entity';
@@ -10,7 +10,7 @@ import { Column, Entity, ManyToOne } from 'typeorm';
 @Entity()
 export class KidProfile extends BaseEntity {
   
-  @Column({ type: 'enum', enum: DocType })
+  @Column({ type: 'enum', enum: KidDocType })
   docType: string;
 
   @Column({ nullable: false })

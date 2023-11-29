@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateBenefitDto } from './dto/create-benefit.dto';
 import { UpdateBenefitDto } from './dto/update-benefit.dto';
 import { InjectRepository } from '@nestjs/typeorm';
-import { DeepPartial, Repository } from 'typeorm';
+import { DeepPartial, FindOneOptions, Repository } from 'typeorm';
 import { Benefit } from './entities/benefit.entity';
 import { BenefitTypeService } from '@/benefit-type/benefit-type.service';
 
@@ -47,6 +47,14 @@ export class BenefitsService {
       where: { id },
       relations: ['benefitType'],
     });
+  }
+
+  findOneByQueryOptions(queryOptions: FindOneOptions<Benefit>) {
+    return this.benefitRepository.findOne(queryOptions);
+  }
+
+  findByQueryOptions(queryOptions: FindOneOptions<Benefit>) {
+    return this.benefitRepository.find(queryOptions);
   }
 
   async update(id: string, updateBenefitDto: UpdateBenefitDto) {

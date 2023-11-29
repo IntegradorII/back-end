@@ -1,6 +1,6 @@
 import { PetGender } from '@/common/enum/pet-gender.enum';
 import { PetKind } from '@/common/enum/pet-kind.enum';
-import { Relationship } from '@/common/enum/relationship.enum';
+// import { Relationship } from '@/common/enum/relationship.enum';
 import { Transform } from 'class-transformer';
 import { IsDate, IsEmail, IsEnum, IsNotEmpty, IsNumber, IsString, Min } from 'class-validator';
 
@@ -32,6 +32,6 @@ export class CreatePetProfileDto {
   @IsDate()
   birthDate: Date;
 
-  @IsEnum(Relationship)
-  relationship: Relationship;
+  // @IsEnum(Relationship)
+  // relationship: Relationship;
 }

@@ -5,7 +5,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { Repository } from 'typeorm';
 import { SegmentsService } from '@/segments/segments.service';
-import { Role } from '@/common/enum/role.enum';
+// import { Role } from '@/common/enum/role.enum';
 // import { Segment } from '@/segments/entities/segment.entity';
 
 @Injectable()
@@ -18,15 +18,15 @@ export class UsersService {
   ) { }
 
   async create(createUserDto: CreateUserDto) {
-    const points = createUserDto.points || 0;
-    let segment = undefined;
-    if(createUserDto.role !== Role.ADMIN) {
-      segment = await this.getSegment(points);
-    }
+    // const points = createUserDto.points || 0;
+    // let segment = undefined;
+    // if(createUserDto.role !== Role.ADMIN) {
+    //   segment = await this.getSegment(points);
+    // }
     const newUser = this.userRepository.create(createUserDto);
-    if(segment) {
-      newUser.segment = segment;
-    }
+    // if(segment) {
+    //   newUser.segment = segment;
+    // }
     return this.userRepository.save(newUser);
   }
 
@@ -75,12 +75,15 @@ export class UsersService {
 
   findAll() {
     return this.userRepository.find({
-      relations: ['segment'],
+      relations: ['segment', 'benefits', 'kidProfiles', 'petProfiles'],
     });
   }
 
   findOne(id: string) {
-    return this.userRepository.findOneBy({ id });
+    return this.userRepository.findOne({
+      where: { id },
+      relations: ['segment', 'benefits', 'kidProfiles', 'petProfiles'],
+    });
   }
 
   findOneByDocTypeAndDocNumber(docType: string, docNumber: string) {

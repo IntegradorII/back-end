@@ -3,7 +3,7 @@ import { User } from '@/users/entities/user.entity';
 import { Column, Entity, ManyToOne, OneToMany } from 'typeorm';
 import { PetKind } from '@/common/enum/pet-kind.enum';
 import { PetGender } from '@/common/enum/pet-gender.enum';
-import { Relationship } from '@/common/enum/relationship.enum';
+// import { Relationship } from '@/common/enum/relationship.enum';
 import { PetCharacteristic } from '@/pet-characteristic/entities/pet-characteristic.entity';
 
 @Entity()
@@ -32,8 +32,8 @@ export class PetProfile extends BaseEntity {
   @Column({ nullable: false, type: 'date' })
   birthDate: Date;
 
-  @Column({ nullable: true, type: 'enum', enum: Relationship })
-  relationship: Relationship;
+  // @Column({ nullable: true, type: 'enum', enum: Relationship })
+  // relationship: Relationship;
 
   @OneToMany(() => PetCharacteristic, petCharacteristic => petCharacteristic.petProfile)
   petCharacteristics: PetCharacteristic[];

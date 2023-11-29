@@ -52,11 +52,18 @@ export class PetCharacteristicService {
   }
 
   findAll() {
-    return this.petCharacteristicRepository.find();
+    return this.petCharacteristicRepository.find({
+      relations: ['petProfile', 'characteristic'],
+    });
   }
 
   findOne(id: string) {
-    return this.petCharacteristicRepository.findOneBy({ id });
+    return this.petCharacteristicRepository.findOne({
+      where: {
+        id,
+      },
+      relations: ['petProfile', 'characteristic'],
+    });
   }
 
   findByPetProfileId(petProfileId: string) {

@@ -46,11 +46,18 @@ export class PetProfileService {
   }
 
   findAll() {
-    return this.petProfileRepository.find();
+    return this.petProfileRepository.find({
+      relations: ['user', 'petCharacteristics', 'petCharacteristics.characteristic'],
+    });
   }
 
   findOne(id: string) {
-    return this.petProfileRepository.findOneBy({ id });
+    return this.petProfileRepository.findOne({
+      where: {
+        id
+      },
+      relations: ['user', 'petCharacteristics', 'petCharacteristics.characteristic'],
+    });
   }
 
   findByUserId(userId: string) {

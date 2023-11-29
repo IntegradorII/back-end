@@ -49,7 +49,9 @@ export class KidProfileService {
   }
 
   findAll() {
-    return this.kidProfileRepository.find();
+    return this.kidProfileRepository.find({
+      relations: ['user'],
+    });
   }
 
   findByUserId(userId: string) {
@@ -73,7 +75,12 @@ export class KidProfileService {
   }
 
   findOne(id: string) {
-    return this.kidProfileRepository.findOneBy({ id });
+    return this.kidProfileRepository.findOne({
+      where: {
+        id
+      },
+      relations: ['user'],
+    });
   }
 
   findByDocTypeAndDocNumber(docType: string, docNumber: string) {
