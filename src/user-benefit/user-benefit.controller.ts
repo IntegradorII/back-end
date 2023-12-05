@@ -8,7 +8,7 @@ import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
 @ApiTags('user-benefit')
 @ApiBearerAuth()
-@Auth(Role.ADMIN)
+@Auth(Role.ADMIN, Role.USER)
 @Controller('user-benefit')
 export class UserBenefitController {
   constructor(private readonly userBenefitService: UserBenefitService) {}

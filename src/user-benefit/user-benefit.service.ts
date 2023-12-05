@@ -101,6 +101,7 @@ export class UserBenefitService {
     if(!user) {
       throw new NotFoundException('User not found');
     }
+    console.log('user', user);
     // const initialSegment = user.segment;
     const segment = await this.usersService.getSegment(user.points);
     user.segment = segment;
@@ -145,7 +146,9 @@ export class UserBenefitService {
         }
       }
     }
-    return this.usersService.saveUser(user);
+    const usr = await this.usersService.saveUser(user);
+    usr.password = undefined;
+    return usr;
   }
 
   async update(id: string, updateUserBenefitDto: UpdateUserBenefitDto) {
