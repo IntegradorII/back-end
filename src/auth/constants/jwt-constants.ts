@@ -1,7 +1,7 @@
 
 type ExpiresIn = `${number}${'s' | 'm' | 'h' | 'd'}`;
 
-export const jwtExpiresIn: ExpiresIn = '1h';
+export const jwtExpiresIn: ExpiresIn = '3h';
 
 export const expiresInToMilliseconds = () : number => {
   const amount = jwtExpiresIn.slice(0, -1);

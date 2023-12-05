@@ -8,7 +8,7 @@ import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
 @ApiTags('characteristics')
 @ApiBearerAuth()
-@Auth(Role.ADMIN)
+@Auth(Role.ADMIN, Role.USER)
 @Controller('characteristics')
 export class CharacteristicsController {
   constructor(private readonly characteristicsService: CharacteristicsService) {}
